@@ -26,6 +26,7 @@ def doit():
 			service = "nlp:analyzeEntities"
 			url = baseUrl + f"/projects/{project}/locations/{location}/services/{service}"
 			
+			# gcloud auth application-default print-access-token
 			bearerToken = os.getenv('BEARER_TOKEN')
 			headers = { "Authorization": f"Bearer {bearerToken}", "Content-Type": "application/json" }
 			
