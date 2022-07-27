@@ -1,16 +1,39 @@
-import requests
+import io
 import os
 from pyCPN import PyCPN
 from pyEncodeDecode import stringEncode, stringDecode
 from dotenv import load_dotenv
+from google.cloud import vision
 
 # Tested with Python v 3.7.2 and CPN Tools v 4.0.1
 # Server for use with processWeatherClient.cpn model example
 
-port = 9999
-conn = PyCPN()
-conn.accept(port)
-load_dotenv()
+# port = 9998
+# conn = PyCPN()
+# conn.accept(port)
+# load_dotenv()
+
+def recognize_image():
+	# Instantiates a client
+	client = vision.ImageAnnotatorClient()
+	
+	# The name of the image file to annotate
+	file_name = os.path.abspath('resources/testImage.jpg')
+
+	# Loads the image into memory
+	with io.open(file_name, 'rb') as image_file:
+		content = image_file.read()
+
+	image = vision.Image(content=content)
+
+	# Performs label detection on the image file
+	response = client.label_detection(image=image)
+	labels = response.label_annotations
+	
+	print('Labels:')
+	for label in labels:
+		print(label.description)
+
 def doit():
 	while True:
 		physicianLog = stringDecode(conn.receive())
@@ -18,28 +41,8 @@ def doit():
 			conn.disconnect()
 			break
 		else:
-			print("This is my physician log: " + physicianLog)
-			
-			baseUrl = "https://healthcare.googleapis.com/v1"
-			project = "virtual-physical-examination"
-			location = "us-central1"
-			service = "nlp:analyzeEntities"
-			url = baseUrl + f"/projects/{project}/locations/{location}/services/{service}"
-			
-			# gcloud auth application-default print-access-token
-			bearerToken = os.getenv('BEARER_TOKEN')
-			headers = { "Authorization": f"Bearer {bearerToken}", "Content-Type": "application/json" }
-			
-			nlpService = "projects/virtual-physical-examination/locations/us-central1/services/nlp"
-			documentContent = physicianLog
-			licensedVocabularies = ['SNOMEDCT_US','ICD10CM']
-			json = { "nlpService": nlpService, "documentContent": documentContent, "licensedVocabularies": licensedVocabularies }
-			
-			response = requests.post(url, headers=headers, json=json)
-			print(response.json())
-			conn.send(stringEncode(str(physicianLog)))
+			recognize_image()
 			break
 
 if __name__ == "__main__":
-   doit()
-
+   recognize_image()
