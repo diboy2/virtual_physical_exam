@@ -7,10 +7,10 @@ import uuid
 # Tested with Python v 3.7.2 and CPN Tools v 4.0.1
 # Server for use with processWeatherClient.cpn model example
 
-port = 9000
-conn = PyCPN()
-conn.accept(port)
-load_dotenv()
+# port = 9000
+# conn = PyCPN()
+# conn.accept(port)
+# load_dotenv()
 
 def upload_text(bucket_name, metrics):
 	storage_client = storage.Client()
@@ -19,8 +19,8 @@ def upload_text(bucket_name, metrics):
 	blob = bucket.blob(object_name)
 	blob.upload_from_string(metrics)
 
-	print(f"{object_name} with metrics {metrics} uploaded to {bucket_name}.")
-	return object_name
+	print(f"{object_name} with metrics {metrics} uploaded to {bucket_name}. {blob.path_helper(bucket_name,object_name)}")
+	return blob.self_link
 
 def doit():
 	while True:
@@ -34,5 +34,4 @@ def doit():
 			break
 
 if __name__ == "__main__":
-   doit()
-
+	upload_text("vpe-daily-metrics", "test")
