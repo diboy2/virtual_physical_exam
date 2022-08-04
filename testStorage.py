@@ -10,8 +10,8 @@ conn.accept(port)
 load_dotenv()
 storage_client = storage.Client()
 
-def download_object(uri):
-	with open('resources/test-object', 'wb') as file_obj:
+def download_object(file_name, uri):	
+	with open(f"resources/{file_name}", 'wb') as file_obj:
 		storage_client.download_blob_to_file(uri, file_obj)
 
 def upload_text(bucket_name, metrics):
@@ -21,7 +21,7 @@ def upload_text(bucket_name, metrics):
 	blob.upload_from_string(metrics)
 
 	print(f"{object_name} with metrics {metrics} uploaded to {bucket_name}.")
-	return f"gsutil://{bucket_name}/object_name"
+	return f"gsutil://{bucket_name}/{object_name}"
 
 def doit():
 	while True:
