@@ -25,7 +25,7 @@ def get_text(object_uri):
 		contents = f.read()
 		return contents
 
-def get_response(object_uri):
+def get_response_json(object_uri):
 	baseUrl = "https://healthcare.googleapis.com/v1"
 	project = "virtual-physical-examination"
 	location = "us-central1"
@@ -40,7 +40,7 @@ def get_response(object_uri):
 	documentContent = get_text(object_uri)
 	licensedVocabularies = ['SNOMEDCT_US','ICD10CM']
 	json = { "nlpService": nlpService, "documentContent": documentContent, "licensedVocabularies": licensedVocabularies }
-	return requests.post(url, headers=headers, json=json)
+	return requests.post(url, headers=headers, json=json).json()
 
 def doit():
 	while True:
@@ -50,8 +50,7 @@ def doit():
 			break
 		else:
 			print("This is my object uri log: " + objectUri)
-			response = get_response(objectUri)
-			conn.send(stringEncode(str(response.json())))
+			conn.send(stringEncode(str(get_response_json(objectUri))))
 			break
 
 if __name__ == "__main__":
