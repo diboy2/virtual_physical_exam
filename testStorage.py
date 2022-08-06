@@ -21,7 +21,7 @@ def upload_text(bucket_name, metrics):
 	blob.upload_from_string(metrics)
 
 	print(f"{object_name} with metrics {metrics} uploaded to {bucket_name}.")
-	return f"gsutil://{bucket_name}/{object_name}"
+	return f"gs://{bucket_name}/{object_name}"
 
 def doit():
 	while True:
