@@ -49,7 +49,6 @@ def doit():
 			conn.disconnect()
 			break
 		else:
-			print("This is my object uri log: " + objectUri)
 			conn.send(stringEncode(str(get_response_json(objectUri))))
 			break
 
