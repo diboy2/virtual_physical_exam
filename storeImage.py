@@ -1,5 +1,5 @@
 from pyCPN import PyCPN
-from virtual_physical_exam.util.pyEncodeDecode import stringEncode, stringDecode
+from util.pyEncodeDecode import stringEncode, stringDecode
 from dotenv import load_dotenv
 from google.cloud import storage
 import uuid

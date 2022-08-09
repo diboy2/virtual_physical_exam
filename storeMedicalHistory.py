@@ -4,7 +4,7 @@ from util.pyCPN import PyCPN
 from util.pyEncodeDecode import stringEncode, stringDecode
 from util.storage import upload_text
 
-port = 9003
+port = 9002
 conn = PyCPN()
 conn.accept(port)
 load_dotenv()
