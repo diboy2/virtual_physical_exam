@@ -50,7 +50,6 @@ def doit():
 			break
 		else:
 			conn.send(stringEncode(str(get_response_json(objectUri))))
-			break
 
 if __name__ == "__main__":
    doit()
