@@ -4,8 +4,8 @@ from pyCPN import PyCPN
 from util.pyEncodeDecode import stringEncode, stringDecode
 from dotenv import load_dotenv
 from google.cloud import storage
-import google.auth
-import google.auth.transport.requests
+# import google.auth
+# import google.auth.transport.requests
 
 # Tested with Python v 3.7.2 and CPN Tools v 4.0.1
 # Server for use with processWeatherClient.cpn model example
@@ -15,9 +15,9 @@ conn = PyCPN()
 conn.accept(port)
 load_dotenv()
 
-creds, project = google.auth.default()
-auth_req = google.auth.transport.requests.Request()
-creds.refresh(auth_req)
+# creds, project = google.auth.default()
+# auth_req = google.auth.transport.requests.Request()
+# creds.refresh(auth_req)
 # Now you can use creds.token
 
 def download_object(file_name, uri):	
@@ -40,7 +40,7 @@ def get_response_json(object_uri):
 	url = baseUrl + f"/projects/{project}/locations/{location}/services/{service}"
 	
 	# gcloud auth application-default print-access-token
-	bearerToken = creds.token
+	bearerToken = os.getenv("BEARER_TOKEN")
 	headers = { "Authorization": f"Bearer {bearerToken}", "Content-Type": "application/json" }
 	
 	nlpService = "projects/virtual-physical-examination/locations/us-central1/services/nlp"
