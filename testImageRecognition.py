@@ -20,6 +20,7 @@ def get_joined_labels(imageUri):
 	response = client.label_detection({
 		'source': { 'image_uri': imageUri }
 	})
+	print(f"Finished image recognition of image uri: {imageUri}.")
 
 	descriptions = list(map(lambda label: label.description, response.label_annotations))
 	return ' '.join(descriptions)

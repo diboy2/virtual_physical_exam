@@ -2,6 +2,7 @@ import requests
 import os
 from pyCPN import PyCPN
 from util.pyEncodeDecode import stringEncode, stringDecode
+from util.storage import download_object
 from dotenv import load_dotenv
 from google.cloud import storage
 # import google.auth
@@ -14,20 +15,16 @@ port = 9999
 conn = PyCPN()
 conn.accept(port)
 load_dotenv()
+storage_client = storage.Client()
 
 # creds, project = google.auth.default()
 # auth_req = google.auth.transport.requests.Request()
 # creds.refresh(auth_req)
 # Now you can use creds.token
 
-def download_object(file_name, uri):	
-	storage_client = storage.Client()
-	with open(f"resources/{file_name}", 'wb') as file_obj:
-		storage_client.download_blob_to_file(uri, file_obj)
-
 def get_text(object_uri):
 	file_name = "recognition_text"
-	download_object(file_name, object_uri)
+	download_object(storage_client, file_name, object_uri)
 	with open(f"resources/{file_name}") as f:
 		contents = f.read()
 		return contents
@@ -47,7 +44,10 @@ def get_response_json(object_uri):
 	documentContent = get_text(object_uri)
 	licensedVocabularies = ['SNOMEDCT_US','ICD10CM']
 	json = { "nlpService": nlpService, "documentContent": documentContent, "licensedVocabularies": licensedVocabularies }
-	return requests.post(url, headers=headers, json=json).json()
+	
+	response_json = requests.post(url, headers=headers, json=json).json()
+	print(f"Finished text recognition of object uri: {object_uri}.")
+	return response_json
 
 def doit():
 	while True:
