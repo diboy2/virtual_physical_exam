@@ -2,7 +2,7 @@ import requests
 import os
 from pyCPN import PyCPN
 from util.pyEncodeDecode import stringEncode, stringDecode
-from util.storage import download_object
+from util.storage import download_object, upload_json
 from dotenv import load_dotenv
 from google.cloud import storage
 # import google.auth
@@ -46,6 +46,7 @@ def get_response_json(object_uri):
 	json = { "nlpService": nlpService, "documentContent": documentContent, "licensedVocabularies": licensedVocabularies }
 	
 	response_json = requests.post(url, headers=headers, json=json).json()
+	upload_json(storage_client, "vpe-text-recognition", response_json)
 	print(f"Finished text recognition of object uri: {object_uri}.")
 	return response_json
 
