@@ -5,6 +5,10 @@ def download_object(storage_client, file_name, uri):
 	with open(f"resources/{file_name}", 'wb') as file_obj:
 		storage_client.download_blob_to_file(uri, file_obj)
 
+def download_json(storage_client, uri):
+	jsonString = storage_client.download_as_string(uri)
+	return json.loads(jsonString)
+
 def upload_text(storage_client, bucket_name, text):
 	bucket = storage_client.bucket(bucket_name)
 	object_name = str(uuid.uuid4().hex)
@@ -24,3 +28,4 @@ def upload_json(storage_client, bucket_name, data):
     )
 	print(f"{object_name} with json uploaded to {bucket_name}.")
 	return f"gs://{bucket_name}/{object_name}"
+
