@@ -29,7 +29,7 @@ def get_text(object_uri):
 		contents = f.read()
 		return contents
 
-def get_response_json(object_uri):
+def upload_text_recognition(object_uri):
 	baseUrl = "https://healthcare.googleapis.com/v1"
 	project = "virtual-physical-examination"
 	location = "us-central1"
@@ -46,9 +46,9 @@ def get_response_json(object_uri):
 	json = { "nlpService": nlpService, "documentContent": documentContent, "licensedVocabularies": licensedVocabularies }
 	
 	response_json = requests.post(url, headers=headers, json=json).json()
-	upload_json(storage_client, "vpe-text-recognition", response_json)
+	text_recognition_uri = upload_json(storage_client, "vpe-text-recognition", response_json)
 	print(f"Finished text recognition of object uri: {object_uri}.")
-	return response_json
+	return text_recognition_uri
 
 def doit():
 	while True:
@@ -57,7 +57,8 @@ def doit():
 			conn.disconnect()
 			break
 		else:
-			conn.send(stringEncode(str(get_response_json(objectUri))))
+			textRecognitionUri = upload_text_recognition(objectUri)
+			conn.send(stringEncode(textRecognitionUri))
 
 if __name__ == "__main__":
    doit()

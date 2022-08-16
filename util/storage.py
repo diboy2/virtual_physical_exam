@@ -1,12 +1,14 @@
 import uuid
 import json
+from google.cloud.storage.blob import Blob
 
 def download_object(storage_client, file_name, uri):	
 	with open(f"resources/{file_name}", 'wb') as file_obj:
 		storage_client.download_blob_to_file(uri, file_obj)
 
 def download_json(storage_client, uri):
-	jsonString = storage_client.download_as_string(uri)
+	blob = Blob.from_string(uri, client=storage_client)
+	jsonString = blob.download_as_string()
 	return json.loads(jsonString)
 
 def upload_text(storage_client, bucket_name, text):

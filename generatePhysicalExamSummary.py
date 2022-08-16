@@ -20,33 +20,18 @@ from google.cloud import storage
 # creds.refresh(auth_req)
 # Now you can use creds.token
 
-def get_text(object_uri):
-	file_name = "recognition_text"
-	download_object(storage_client, file_name, object_uri)
-	with open(f"resources/{file_name}") as f:
-		contents = f.read()
-		return contents
 # Instantiate a Google Cloud Storage client and specify required bucket and file
 storage_client = storage.Client()
-bucket = storage_client.get_bucket('bucket_name')
-blob = bucket.blob('filename.json')
-
-# Download the contents of the blob as a string and then parse it using json.loads() method
-data = json.loads(blob.download_as_string(client=None))
-# import google.auth
-# import google.auth.transport.requests
-def get_json(objectUri):
-	return download_json(storage_client, objectUri)
 
 def get_object_entity_mentions(objectUris=["",""]):
 	out = []
 	for uri in objectUris:
 		data = download_json(storage_client,uri)
 		aggregatedData = {
-			entityMentions: [mention for mention in data["entityMentions"]],
-			entities: [mention for mention in data["entities"]]
+			"entityMentions": [mention for mention in data["entityMentions"]],
+			"entities": [mention for mention in data["entities"]]
 		}
-		out.append(mentions)
+		out.append(aggregatedData)
 	return out
 
 if __name__ == "__main__":
