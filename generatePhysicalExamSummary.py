@@ -5,6 +5,7 @@ from util.pyEncodeDecode import stringEncode, stringDecode
 from util.storage import download_object, upload_json, download_json
 from dotenv import load_dotenv
 from google.cloud import storage
+from json2html import *
 
 # Tested with Python v 3.7.2 and CPN Tools v 4.0.1
 # Server for use with processWeatherClient.cpn model example
@@ -24,14 +25,10 @@ from google.cloud import storage
 storage_client = storage.Client()
 
 def get_object_entity_mentions(objectUris=["",""]):
-	out = []
+	out = ""
 	for uri in objectUris:
 		data = download_json(storage_client,uri)
-		aggregatedData = {
-			"entityMentions": [mention for mention in data["entityMentions"]],
-			"entities": [mention for mention in data["entities"]]
-		}
-		out.append(aggregatedData)
+		out += json2html.convert(json = data)
 	return out
 
 if __name__ == "__main__":
