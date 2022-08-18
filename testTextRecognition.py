@@ -9,6 +9,10 @@ import google.auth.transport.requests
 
 # Tested with Python v 3.7.2 and CPN Tools v 4.0.1
 # Server for use with processWeatherClient.cpn model example
+port = 9999
+conn = PyCPN()
+conn.accept(port)
+load_dotenv()
 storage_client = storage.Client()
 
 creds, project = google.auth.default(scopes=["https://www.googleapis.com/auth/cloud-healthcare"])
@@ -43,10 +47,7 @@ def upload_text_recognition(object_uri):
 	return text_recognition_uri
 
 def doit():
-	port = 9999
-	conn = PyCPN()
-	conn.accept(port)
-	load_dotenv()
+	
 	while True:
 		objectUri = stringDecode(conn.receive())
 		if objectUri == 'quit':
