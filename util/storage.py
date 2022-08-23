@@ -31,3 +31,15 @@ def upload_json(storage_client, bucket_name, data):
 	print(f"{object_name} with json uploaded to {bucket_name}.")
 	return f"gs://{bucket_name}/{object_name}"
 
+def upload_html(storage_client, bucket_name, data):
+	bucket = storage_client.bucket(bucket_name)
+	object_name = f"{str(uuid.uuid4().hex)}.html"
+	blob = bucket.blob(object_name)
+	blob.upload_from_string(
+        data=data,
+        content_type='text/html'
+    )
+	print(f"{object_name} with html uploaded to {bucket_name}.")
+	return f"gs://{bucket_name}/{object_name}"
+
+
