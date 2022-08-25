@@ -45,7 +45,4 @@ def doit():
 
 if __name__ == "__main__":
 	doit()
-	# print(get_object_entity_mentions([
-	# 	"gs://vpe-text-recognition/290c634358424c51bf53229514d68839.json",
-	# 	"gs://vpe-text-recognition/89f1833e3eaa451c8c33b365d961ee5a.json"]))
 
