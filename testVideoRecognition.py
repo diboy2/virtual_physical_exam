@@ -29,19 +29,19 @@ def get_joined_labels(videoUri):
 	labels = []
 
 	for i, segment_label in enumerate(segment_labels):
-		categories = map(lambda category: category.description,segment_label.category_entities )
-		labels.append({ "label": segment_label.entity.description, "categories": categories})
-
-	return ' '.join(labels)
+		categories = ",".join(map(lambda category: category.description,segment_label.category_entities ))
+		labels.append( f"{segment_label.entity.description}: {categories}")
+	
+	return ','.join(labels)
 
 def doit():
 	while True:	
-		imageUri = stringDecode(conn.receive())
-		if imageUri == 'quit':
+		videoUri = stringDecode(conn.receive())
+		if videoUri == 'quit':
 			conn.disconnect()
 			break
 		else:
-			url = upload_text(storage_client, "vpe-image-recognition", get_joined_labels(imageUri))
+			url = upload_text(storage_client, "vpe-video-recognition", get_joined_labels(videoUri))
 			conn.send(stringEncode(url))
 
 if __name__ == "__main__":
