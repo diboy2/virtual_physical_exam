@@ -136,6 +136,13 @@
             </alias>
             <layout>colset PERSON_ID = INT;</layout>
           </color>
+          <color id="ID1427353634">
+            <id>PERSON_IDS</id>
+            <list>
+              <id>PERSON_ID</id>
+            </list>
+            <layout>colset PERSON_IDS = list PERSON_ID;</layout>
+          </color>
           <color id="ID1413725299">
             <id>PERSON</id>
             <record>
@@ -273,6 +280,14 @@
             </list>
             <layout>colset MESSAGES = list MESSAGE;</layout>
           </color>
+          <color id="ID1427608146">
+            <id>PATIENT_MESSAGE_COUNT</id>
+            <product>
+              <id>PERSON_ID</id>
+              <id>INT</id>
+            </product>
+            <layout>colset PATIENT_MESSAGE_COUNT = product PERSON_ID * INT;</layout>
+          </color>
           <color id="ID1424823875">
             <id>SUBSCRIPTION_ID</id>
             <alias>
@@ -399,16 +414,6 @@
  category: EXAM_CATEGORY *
  symptoms: EXAM_CATEGORY_SYMPTOMS;</layout>
           </color>
-          <color id="ID1416288482">
-            <id>PHYSICIAN_NOTE</id>
-            <product>
-              <id>PERSON_ID</id>
-              <id>STRING</id>
-            </product>
-            <layout>colset PHYSICIAN_NOTE = product
- PERSON_ID *
- STRING;</layout>
-          </color>
           <color id="ID1416147141">
             <id>EXAM_CATEGORY_MAPPING</id>
             <record>
@@ -424,6 +429,23 @@
             <layout>colset EXAM_CATEGORY_MAPPING = record 
  vitals: EXAM_CATEGORY_LOG *
  skin: EXAM_CATEGORY_LOG;</layout>
+          </color>
+          <color id="ID1416288482">
+            <id>PHYSICIAN_NOTE</id>
+            <product>
+              <id>PERSON_ID</id>
+              <id>STRING</id>
+            </product>
+            <layout>colset PHYSICIAN_NOTE = product
+ PERSON_ID *
+ STRING;</layout>
+          </color>
+          <color id="ID1427379645">
+            <id>NOTES</id>
+            <list>
+              <id>STRING</id>
+            </list>
+            <layout>colset NOTES = list STRING;</layout>
           </color>
         </block>
         <block id="ID1425435874">
@@ -541,6 +563,13 @@
             <id>personId2</id>
             <layout>var patientId, personId1,personId2:PERSON_ID;</layout>
           </var>
+          <var id="ID1427359282">
+            <type>
+              <id>PERSON_IDS</id>
+            </type>
+            <id>patientIds</id>
+            <layout>var patientIds: PERSON_IDS;</layout>
+          </var>
           <var id="ID1414036964">
             <type>
               <id>CONTENT</id>
@@ -604,11 +633,17 @@
             <id>nextMessages</id>
             <id>deletedMessages</id>
             <id>waitingMessages</id>
-            <id>availableMessages</id>
-            <layout>var messages,nextMessages,
+            <layout>var messages,
+ nextMessages,
  deletedMessages,
- waitingMessages,
- availableMessages: MESSAGES;</layout>
+ waitingMessages: MESSAGES;</layout>
+          </var>
+          <var id="ID1427316635">
+            <type>
+              <id>PATIENT_MESSAGE_COUNT</id>
+            </type>
+            <id>patientMessageCount</id>
+            <layout>var patientMessageCount: PATIENT_MESSAGE_COUNT;</layout>
           </var>
           <var id="ID1424826256">
             <type>
@@ -976,6 +1011,20 @@
             <id>physicianNote</id>
             <layout>var physicianNote: PHYSICIAN_NOTE;</layout>
           </var>
+          <var id="ID1427393646">
+            <type>
+              <id>STRING</id>
+            </type>
+            <id>note</id>
+            <layout>var note: STRING;</layout>
+          </var>
+          <var id="ID1427377746">
+            <type>
+              <id>NOTES</id>
+            </type>
+            <id>notes</id>
+            <layout>var notes: NOTES;</layout>
+          </var>
         </block>
         <block id="ID1424555573">
           <id>Subscribers</id>
@@ -988,6 +1037,11 @@
           </var>
         </block>
       </block>
+      <ml id="ID1427568888">val ht : (string, int) HashTable.hash_table =
+    HashTable.mkTable (HashString.hashString, op=) (42, Fail &quot;not found&quot;)
+        <layout>val ht : (string, int) HashTable.hash_table =
+    HashTable.mkTable (HashString.hashString, op=) (42, Fail &quot;not found&quot;)</layout>
+      </ml>
       <block id="ID1415264113">
         <id>Function Declaration</id>
         <block id="ID1417193241">
@@ -1263,6 +1317,15 @@ in
   (getCategoryHeader(examCategory) ^ &quot; Examination: &quot; ^ String.concatWith &quot;, &quot; notes)    
 end;</layout>
           </ml>
+          <ml id="ID1427515009">fun containsPatientId(
+ patientId:PERSON_ID,
+ patientIds: PERSON_IDS
+) = List.exists (fn (el) =&gt; (el = patientId)) patientIds;
+            <layout>fun containsPatientId(
+ patientId:PERSON_ID,
+ patientIds: PERSON_IDS
+) = List.exists (fn (el) =&gt; (el = patientId)) patientIds;</layout>
+          </ml>
         </block>
       </block>
       <block id="ID1417406686">
@@ -1349,7 +1412,7 @@ end;</layout>
                 version="4.0.1">MESSAGE_IDS</text>
         </type>
         <initmark id="ID1412539516">
-          <posattr x="961.000000"
+          <posattr x="942.000000"
                    y="-463.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -1360,7 +1423,7 @@ end;</layout>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1"/>
+                version="4.0.1">1`[]</text>
         </initmark>
       </place>
       <place id="ID1412616543">
@@ -1780,7 +1843,7 @@ end;</layout>
         </initmark>
       </place>
       <place id="ID1412819066">
-        <posattr x="868.000000"
+        <posattr x="882.000000"
                  y="-294.000000"/>
         <fillattr colour="White"
                   pattern=""
@@ -1803,7 +1866,7 @@ end;</layout>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1416474237">
-          <posattr x="995.500000"
+          <posattr x="1009.500000"
                    y="-317.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -1817,7 +1880,7 @@ end;</layout>
                 version="4.0.1">MESSAGE</text>
         </type>
         <initmark id="ID1412819068">
-          <posattr x="998.000000"
+          <posattr x="1012.000000"
                    y="-270.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -2003,12 +2066,12 @@ end;</layout>
                  h="40.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
-        <marking x="86.750000"
-                 y="22.250000"
+        <marking x="-1.000000"
+                 y="0.000000"
                  hidden="false">
-          <snap snap_id="0"
-                anchor.horizontal="3"
-                anchor.vertical="2"/>
+          <snap snap_id="2"
+                anchor.horizontal="1"
+                anchor.vertical="3"/>
         </marking>
         <type id="ID1413826039">
           <posattr x="279.500000"
@@ -2219,8 +2282,8 @@ end;</layout>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1416153590">
-          <posattr x="-49.000000"
-                   y="-566.000000"/>
+          <posattr x="-34.000000"
+                   y="-451.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -2611,6 +2674,58 @@ end;</layout>
                 version="4.0.1"/>
         </initmark>
       </place>
+      <place id="ID1427609840">
+        <posattr x="227.000000"
+                 y="-588.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Patient Id Message Count</text>
+        <ellipse w="192.000000"
+                 h="40.000000"/>
+        <token x="-10.000000"
+               y="0.000000"/>
+        <marking x="0.000000"
+                 y="0.000000"
+                 hidden="false">
+          <snap snap_id="0"
+                anchor.horizontal="0"
+                anchor.vertical="0"/>
+        </marking>
+        <type id="ID1427609841">
+          <posattr x="223.000000"
+                   y="-629.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">PATIENT_MESSAGE_COUNT</text>
+        </type>
+        <initmark id="ID1427609842">
+          <posattr x="329.000000"
+                   y="-564.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </initmark>
+      </place>
       <trans id="ID1413640804"
              explicit="false">
         <posattr x="462.000000"
@@ -2791,7 +2906,7 @@ end;</layout>
         <box w="211.427879"
              h="40.000000"/>
         <subst subpage="ID1415845460"
-               portsock="(ID1415845528,ID1413649216)(ID1424151950,ID1424145873)">
+               portsock="(ID1415845528,ID1413649216)(ID1424151950,ID1424145873)(ID1427677558,ID1427609840)">
           <subpageinfo id="ID1415845581"
                        name="Post Physical Examination">
             <posattr x="1371.000000"
@@ -2969,13 +3084,13 @@ end;</layout>
                   bold="false"/>
         <text>Pre-physical Examination</text>
         <box w="212.371200"
-             h="76.864000"/>
+             h="94.864000"/>
         <subst subpage="ID1425657341"
-               portsock="(ID1425657388,ID1413826038)(ID1425657393,ID1415714802)(ID1425657398,ID1412774255)(ID1425657403,ID1414565284)(ID1425657408,ID1412817847)(ID1425657413,ID1413743635)(ID1425657418,ID1412616543)(ID1425657423,ID1412619403)">
+               portsock="(ID1425657388,ID1413826038)(ID1425657393,ID1415714802)(ID1425657398,ID1412774255)(ID1425657403,ID1414565284)(ID1425657408,ID1412817847)(ID1425657413,ID1413743635)(ID1425657418,ID1412616543)(ID1425657423,ID1412619403)(ID1427612752,ID1427609840)">
           <subpageinfo id="ID1425657601"
                        name="Pre Physical Examination">
             <posattr x="-126.000000"
-                     y="-700.432000"/>
+                     y="-709.432000"/>
             <fillattr colour="White"
                       pattern="Solid"
                       filled="false"/>
@@ -2990,7 +3105,7 @@ end;</layout>
                  y="-3.000000"/>
         <cond id="ID1425657320">
           <posattr x="-241.185600"
-                   y="-608.568000"/>
+                   y="-599.568000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -3004,7 +3119,7 @@ end;</layout>
         </cond>
         <time id="ID1425657321">
           <posattr x="-5.314400"
-                   y="-608.568000"/>
+                   y="-599.568000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -3018,7 +3133,7 @@ end;</layout>
         </time>
         <code id="ID1425657322">
           <posattr x="14.685600"
-                   y="-728.432000"/>
+                   y="-737.432000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -3032,7 +3147,7 @@ end;</layout>
         </code>
         <priority id="ID1425657324">
           <posattr x="-270.185600"
-                   y="-707.432000"/>
+                   y="-716.432000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -3061,7 +3176,7 @@ end;</layout>
         <box w="175.619100"
              h="102.434314"/>
         <subst subpage="ID1426946563"
-               portsock="(ID1426946588,ID1412818447)(ID1426946593,ID1412619403)(ID1426946598,ID1417367329)(ID1426946603,ID1412539514)(ID1426946608,ID1412814360)(ID1426946613,ID1416153589)(ID1426946618,ID1412738345)(ID1426946623,ID1412774255)(ID1426946628,ID1424511848)(ID1426946633,ID1423820799)(ID1426946638,ID1414565284)(ID1426946643,ID1412819066)(ID1426946648,ID1412745218)(ID1426946653,ID1412817847)(ID1427006375,ID1412616543)(ID1427198484,ID1417369351)(ID1427277264,ID1427265882)">
+               portsock="(ID1426946588,ID1412818447)(ID1426946593,ID1412619403)(ID1426946598,ID1417367329)(ID1426946603,ID1412539514)(ID1426946608,ID1412814360)(ID1426946613,ID1416153589)(ID1426946618,ID1412738345)(ID1426946623,ID1412774255)(ID1426946628,ID1424511848)(ID1426946633,ID1423820799)(ID1426946638,ID1414565284)(ID1426946643,ID1412819066)(ID1426946648,ID1412745218)(ID1426946653,ID1412817847)(ID1427006375,ID1412616543)(ID1427198484,ID1417369351)(ID1427277264,ID1427265882)(ID1427583992,ID1427609840)">
           <subpageinfo id="ID1426946784"
                        name="PubSub">
             <posattr x="210.000000"
@@ -4696,7 +4811,7 @@ end;</layout>
         <placeend idref="ID1412774255"/>
         <bendpoint id="ID1426948556"
                    serial="1">
-          <posattr x="182.341075"
+          <posattr x="145.000000"
                    y="-420.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -5217,6 +5332,173 @@ end;</layout>
                 version="4.0.1"/>
         </annot>
       </arc>
+      <arc id="ID1427610911"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1425657319"/>
+        <placeend idref="ID1427609840"/>
+        <bendpoint id="ID1427611049"
+                   serial="1">
+          <posattr x="-141.937500"
+                   y="-588.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427610912">
+          <posattr x="-253.000000"
+                   y="-605.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427611469"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1426946529"/>
+        <placeend idref="ID1427609840"/>
+        <bendpoint id="ID1427611618"
+                   serial="1">
+          <posattr x="168.000000"
+                   y="-448.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427611470">
+          <posattr x="150.000000"
+                   y="-384.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427646236"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1426946529"/>
+        <placeend idref="ID1427609840"/>
+        <annot id="ID1427646237">
+          <posattr x="201.000000"
+                   y="-445.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427673174"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1415845452"/>
+        <placeend idref="ID1427609840"/>
+        <bendpoint id="ID1427673792"
+                   serial="1">
+          <posattr x="1302.000000"
+                   y="-588.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427673175">
+          <posattr x="1320.000000"
+                   y="-613.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
       <constraints/>
       <group id="ID1426946403"
              name="Group 1"/>
@@ -5709,12 +5991,12 @@ end;</layout>
                  h="46.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
-        <marking x="0.000000"
-                 y="0.000000"
+        <marking x="41.000000"
+                 y="58.000000"
                  hidden="false">
           <snap snap_id="0"
-                anchor.horizontal="0"
-                anchor.vertical="0"/>
+                anchor.horizontal="3"
+                anchor.vertical="2"/>
         </marking>
         <type id="ID1413640844">
           <posattr x="399.500000"
@@ -5746,8 +6028,8 @@ end;</layout>
         </initmark>
       </place>
       <place id="ID1413692259">
-        <posattr x="0.000000"
-                 y="-853.000000"/>
+        <posattr x="-984.000000"
+                 y="-1064.000000"/>
         <fillattr colour="White"
                   pattern=""
                   filled="false"/>
@@ -5757,20 +6039,20 @@ end;</layout>
         <textattr colour="Black"
                   bold="false"/>
         <text>Post-Physical Examination</text>
-        <ellipse w="170.000000"
+        <ellipse w="198.000000"
                  h="48.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
-        <marking x="0.000000"
-                 y="0.000000"
+        <marking x="21.000000"
+                 y="42.000000"
                  hidden="false">
           <snap snap_id="0"
-                anchor.horizontal="0"
-                anchor.vertical="0"/>
+                anchor.horizontal="3"
+                anchor.vertical="2"/>
         </marking>
         <type id="ID1413692260">
-          <posattr x="87.500000"
-                   y="-879.000000"/>
+          <posattr x="-1081.500000"
+                   y="-1090.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -5783,8 +6065,8 @@ end;</layout>
                 version="4.0.1">PERSON</text>
         </type>
         <initmark id="ID1413692261">
-          <posattr x="94.000000"
-                   y="-826.000000"/>
+          <posattr x="-879.000000"
+                   y="-1037.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -5798,8 +6080,8 @@ end;</layout>
         </initmark>
         <port id="ID1413698030"
               type="Out">
-          <posattr x="-62.000000"
-                   y="-872.000000"/>
+          <posattr x="-1056.000000"
+                   y="-1083.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -5928,8 +6210,8 @@ end;</layout>
         </initmark>
       </place>
       <place id="ID1426107481">
-        <posattr x="2310.000000"
-                 y="-882.000000"/>
+        <posattr x="294.000000"
+                 y="-788.000000"/>
         <fillattr colour="White"
                   pattern=""
                   filled="false"/>
@@ -5951,8 +6233,8 @@ end;</layout>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1426107482">
-          <posattr x="2310.000000"
-                   y="-851.000000"/>
+          <posattr x="294.000000"
+                   y="-757.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -5965,8 +6247,8 @@ end;</layout>
                 version="4.0.1">TOPIC_MESSAGE_CONTENT</text>
         </type>
         <initmark id="ID1426107483">
-          <posattr x="2442.000000"
-                   y="-858.000000"/>
+          <posattr x="426.000000"
+                   y="-764.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -5980,8 +6262,8 @@ end;</layout>
         </initmark>
         <port id="ID1426143644"
               type="Out">
-          <posattr x="2209.000000"
-                   y="-898.000000"/>
+          <posattr x="193.000000"
+                   y="-804.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -5991,6 +6273,110 @@ end;</layout>
           <textattr colour="Black"
                     bold="false"/>
         </port>
+      </place>
+      <place id="ID1427404426">
+        <posattr x="-210.000000"
+                 y="-866.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Patient Ids</text>
+        <ellipse w="174.000000"
+                 h="40.000000"/>
+        <token x="-10.000000"
+               y="0.000000"/>
+        <marking x="0.000000"
+                 y="0.000000"
+                 hidden="false">
+          <snap snap_id="0"
+                anchor.horizontal="0"
+                anchor.vertical="0"/>
+        </marking>
+        <type id="ID1427404427">
+          <posattr x="-199.000000"
+                   y="-834.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">PERSON_IDS</text>
+        </type>
+        <initmark id="ID1427404428">
+          <posattr x="-132.000000"
+                   y="-842.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">1`[]</text>
+        </initmark>
+      </place>
+      <place id="ID1427720804">
+        <posattr x="-252.000000"
+                 y="-1067.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Finished</text>
+        <ellipse w="112.500000"
+                 h="40.000000"/>
+        <token x="-10.000000"
+               y="0.000000"/>
+        <marking x="0.000000"
+                 y="0.000000"
+                 hidden="false">
+          <snap snap_id="0"
+                anchor.horizontal="0"
+                anchor.vertical="0"/>
+        </marking>
+        <type id="ID1427720805">
+          <posattr x="-183.500000"
+                   y="-1090.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">PERSON</text>
+        </type>
+        <initmark id="ID1427720806">
+          <posattr x="-177.000000"
+                   y="-1043.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </initmark>
       </place>
       <trans id="ID1413640846"
              explicit="false">
@@ -6660,7 +7046,7 @@ end;</layout>
       </trans>
       <trans id="ID1413640906"
              explicit="false">
-        <posattr x="0.000000"
+        <posattr x="-567.000000"
                  y="-1067.000000"/>
         <fillattr colour="White"
                   pattern=""
@@ -6671,13 +7057,13 @@ end;</layout>
         <textattr colour="Black"
                   bold="false"/>
         <text>End Physical Examination</text>
-        <box w="168.511826"
-             h="40.000000"/>
+        <box w="259.011826"
+             h="39.000000"/>
         <binding x="7.200000"
                  y="-3.000000"/>
         <cond id="ID1413640907">
-          <posattr x="-93.255913"
-                   y="-1036.000000"/>
+          <posattr x="-553.750000"
+                   y="-1105.500000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -6687,11 +7073,11 @@ end;</layout>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1"/>
+                version="4.0.1">[not (containsPatientId(#personId(patient),patientIds))]</text>
         </cond>
         <time id="ID1413640908">
-          <posattr x="98.755913"
-                   y="-1036.000000"/>
+          <posattr x="-422.994087"
+                   y="-1036.500000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -6704,8 +7090,8 @@ end;</layout>
                 version="4.0.1"/>
         </time>
         <code id="ID1413640909">
-          <posattr x="118.755913"
-                   y="-1119.000000"/>
+          <posattr x="-402.994087"
+                   y="-1118.500000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -6718,8 +7104,8 @@ end;</layout>
                 version="4.0.1"/>
         </code>
         <priority id="ID1413640911">
-          <posattr x="-122.255913"
-                   y="-1098.000000"/>
+          <posattr x="-734.505913"
+                   y="-1097.500000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -6808,8 +7194,8 @@ end;</layout>
       </trans>
       <trans id="ID1425902622"
              explicit="false">
-        <posattr x="1974.000000"
-                 y="-882.000000"/>
+        <posattr x="294.000000"
+                 y="-866.000000"/>
         <fillattr colour="White"
                   pattern=""
                   filled="false"/>
@@ -6822,11 +7208,11 @@ end;</layout>
         <box w="180.000000"
              h="40.000000"/>
         <subst subpage="ID1416391529"
-               portsock="(ID1416391542,ID1425967374)(ID1416391537,ID1426107481)">
+               portsock="(ID1416391542,ID1425967374)(ID1416391537,ID1426107481)(ID1421680589,ID1427404426)">
           <subpageinfo id="ID1425902634"
                        name="Upload Physician Notes">
-            <posattr x="1956.000000"
-                     y="-906.000000"/>
+            <posattr x="276.000000"
+                     y="-890.000000"/>
             <fillattr colour="White"
                       pattern="Solid"
                       filled="false"/>
@@ -6840,8 +7226,8 @@ end;</layout>
         <binding x="7.200000"
                  y="-3.000000"/>
         <cond id="ID1425902623">
-          <posattr x="1875.000000"
-                   y="-851.000000"/>
+          <posattr x="195.000000"
+                   y="-835.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -6854,8 +7240,8 @@ end;</layout>
                 version="4.0.1"/>
         </cond>
         <time id="ID1425902624">
-          <posattr x="2078.500000"
-                   y="-851.000000"/>
+          <posattr x="398.500000"
+                   y="-835.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -6868,8 +7254,8 @@ end;</layout>
                 version="4.0.1"/>
         </time>
         <code id="ID1425902625">
-          <posattr x="2098.500000"
-                   y="-934.000000"/>
+          <posattr x="418.500000"
+                   y="-918.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -6882,8 +7268,82 @@ end;</layout>
                 version="4.0.1"/>
         </code>
         <priority id="ID1425902627">
-          <posattr x="1846.000000"
-                   y="-913.000000"/>
+          <posattr x="166.000000"
+                   y="-897.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </priority>
+      </trans>
+      <trans id="ID1427716866"
+             explicit="false">
+        <posattr x="-16.000000"
+                 y="-1067.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Finished Social Assessment</text>
+        <box w="180.000000"
+             h="40.000000"/>
+        <binding x="7.200000"
+                 y="-3.000000"/>
+        <cond id="ID1427716867">
+          <posattr x="-115.000000"
+                   y="-1036.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </cond>
+        <time id="ID1427716868">
+          <posattr x="88.500000"
+                   y="-1036.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </time>
+        <code id="ID1427716869">
+          <posattr x="108.500000"
+                   y="-1119.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </code>
+        <priority id="ID1427716871">
+          <posattr x="-144.000000"
+                   y="-1098.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -7120,38 +7580,6 @@ end;</layout>
         <placeend idref="ID1413640831"/>
         <annot id="ID1416859340">
           <posattr x="2316.000000"
-                   y="-1056.000000"/>
-          <fillattr colour="White"
-                    pattern="Solid"
-                    filled="false"/>
-          <lineattr colour="Black"
-                    thick="0"
-                    type="Solid"/>
-          <textattr colour="Black"
-                    bold="false"/>
-          <text tool="CPN Tools"
-                version="4.0.1">patient</text>
-        </annot>
-      </arc>
-      <arc id="ID1413640930"
-           orientation="TtoP"
-           order="1">
-        <posattr x="0.000000"
-                 y="0.000000"/>
-        <fillattr colour="White"
-                  pattern=""
-                  filled="false"/>
-        <lineattr colour="Black"
-                  thick="1"
-                  type="Solid"/>
-        <textattr colour="Black"
-                  bold="false"/>
-        <arrowattr headsize="1.200000"
-                   currentcyckle="2"/>
-        <transend idref="ID1413640900"/>
-        <placeend idref="ID1413640843"/>
-        <annot id="ID1416859341">
-          <posattr x="439.000000"
                    y="-1056.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -7438,9 +7866,22 @@ end;</layout>
                    currentcyckle="2"/>
         <transend idref="ID1413640906"/>
         <placeend idref="ID1413692259"/>
+        <bendpoint id="ID1427717997"
+                   serial="1">
+          <posattr x="-787.625000"
+                   y="-1067.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
         <annot id="ID1416859349">
-          <posattr x="26.500000"
-                   y="-962.000000"/>
+          <posattr x="-840.000000"
+                   y="-1056.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -7504,38 +7945,6 @@ end;</layout>
         <placeend idref="ID1413640840"/>
         <annot id="ID1416914015">
           <posattr x="918.000000"
-                   y="-1056.000000"/>
-          <fillattr colour="White"
-                    pattern="Solid"
-                    filled="false"/>
-          <lineattr colour="Black"
-                    thick="0"
-                    type="Solid"/>
-          <textattr colour="Black"
-                    bold="false"/>
-          <text tool="CPN Tools"
-                version="4.0.1">patient</text>
-        </annot>
-      </arc>
-      <arc id="ID1416939656"
-           orientation="PtoT"
-           order="1">
-        <posattr x="0.000000"
-                 y="0.000000"/>
-        <fillattr colour="White"
-                  pattern=""
-                  filled="false"/>
-        <lineattr colour="Black"
-                  thick="1"
-                  type="Solid"/>
-        <textattr colour="Black"
-                  bold="false"/>
-        <arrowattr headsize="1.200000"
-                   currentcyckle="2"/>
-        <transend idref="ID1413640906"/>
-        <placeend idref="ID1413640843"/>
-        <annot id="ID1416939657">
-          <posattr x="134.000000"
                    y="-1056.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -7632,8 +8041,8 @@ end;</layout>
         <placeend idref="ID1425967374"/>
         <bendpoint id="ID1426179284"
                    serial="1">
-          <posattr x="771.000000"
-                   y="-882.000000"/>
+          <posattr x="767.000000"
+                   y="-840.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -7644,8 +8053,8 @@ end;</layout>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1425973107">
-          <posattr x="997.000000"
-                   y="-871.000000"/>
+          <posattr x="1004.000000"
+                   y="-829.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -7765,6 +8174,19 @@ end;</layout>
                    currentcyckle="2"/>
         <transend idref="ID1425902622"/>
         <placeend idref="ID1425967374"/>
+        <bendpoint id="ID1427329624"
+                   serial="1">
+          <posattr x="1176.000000"
+                   y="-866.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
         <annot id="ID1426005376">
           <posattr x="1696.000000"
                    y="-847.000000"/>
@@ -7991,8 +8413,8 @@ end;</layout>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1426039118">
-          <posattr x="535.000000"
-                   y="-974.000000"/>
+          <posattr x="670.000000"
+                   y="-968.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -8003,51 +8425,6 @@ end;</layout>
                     bold="false"/>
           <text tool="CPN Tools"
                 version="4.0.1">(#personId(patient),getPhysicianNotesByCategory(NEUROLOGICAL))</text>
-        </annot>
-      </arc>
-      <arc id="ID1426048597"
-           orientation="TtoP"
-           order="1">
-        <posattr x="0.000000"
-                 y="0.000000"/>
-        <fillattr colour="White"
-                  pattern=""
-                  filled="false"/>
-        <lineattr colour="Black"
-                  thick="1"
-                  type="Solid"/>
-        <textattr colour="Black"
-                  bold="false"/>
-        <arrowattr headsize="1.200000"
-                   currentcyckle="2"/>
-        <transend idref="ID1413640906"/>
-        <placeend idref="ID1425967374"/>
-        <bendpoint id="ID1426574636"
-                   serial="1">
-          <posattr x="64.750000"
-                   y="-902.750000"/>
-          <fillattr colour="White"
-                    pattern="Solid"
-                    filled="false"/>
-          <lineattr colour="Black"
-                    thick="0"
-                    type="Solid"/>
-          <textattr colour="Black"
-                    bold="false"/>
-        </bendpoint>
-        <annot id="ID1426048598">
-          <posattr x="274.000000"
-                   y="-948.000000"/>
-          <fillattr colour="White"
-                    pattern="Solid"
-                    filled="false"/>
-          <lineattr colour="Black"
-                    thick="0"
-                    type="Solid"/>
-          <textattr colour="Black"
-                    bold="false"/>
-          <text tool="CPN Tools"
-                version="4.0.1">(#personId(patient),getPhysicianNotesByCategory(SOCIAL_DETERMINANTS))</text>
         </annot>
       </arc>
       <arc id="ID1426119382"
@@ -8125,6 +8502,333 @@ end;</layout>
                     bold="false"/>
           <text tool="CPN Tools"
                 version="4.0.1">(#personId(patient),getPhysicianNotesByCategory(SKIN))</text>
+        </annot>
+      </arc>
+      <arc id="ID1427437344"
+           orientation="TtoP"
+           order="2">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1425902622"/>
+        <placeend idref="ID1427404426"/>
+        <annot id="ID1427437345">
+          <posattr x="60.000000"
+                   y="-862.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427438214"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1413640906"/>
+        <placeend idref="ID1427404426"/>
+        <bendpoint id="ID1427726994"
+                   serial="1">
+          <posattr x="-630.000000"
+                   y="-854.687500"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427438215">
+          <posattr x="-584.000000"
+                   y="-844.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patientIds</text>
+        </annot>
+      </arc>
+      <arc id="ID1427439086"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1425902622"/>
+        <placeend idref="ID1427404426"/>
+        <annot id="ID1427439087">
+          <posattr x="59.000000"
+                   y="-848.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427439961"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1413640906"/>
+        <placeend idref="ID1427404426"/>
+        <bendpoint id="ID1427728262"
+                   serial="1">
+          <posattr x="-527.625000"
+                   y="-882.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427439962">
+          <posattr x="-487.000000"
+                   y="-893.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patientIds</text>
+        </annot>
+      </arc>
+      <arc id="ID1427717046"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1427716866"/>
+        <placeend idref="ID1413640843"/>
+        <annot id="ID1427717047">
+          <posattr x="143.000000"
+                   y="-1056.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patient</text>
+        </annot>
+      </arc>
+      <arc id="ID1427717558"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1427716866"/>
+        <placeend idref="ID1425967374"/>
+        <bendpoint id="ID1427723250"
+                   serial="1">
+          <posattr x="-16.000000"
+                   y="-908.437500"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427717559">
+          <posattr x="136.000000"
+                   y="-945.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">(#personId(patient),getPhysicianNotesByCategory(SOCIAL_DETERMINANTS))</text>
+        </annot>
+      </arc>
+      <arc id="ID1427721954"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1427716866"/>
+        <placeend idref="ID1427720804"/>
+        <annot id="ID1427721955">
+          <posattr x="-151.000000"
+                   y="-1056.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patient</text>
+        </annot>
+      </arc>
+      <arc id="ID1427736784"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1413640900"/>
+        <placeend idref="ID1413640843"/>
+        <annot id="ID1427736785">
+          <posattr x="439.000000"
+                   y="-1056.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patient</text>
+        </annot>
+      </arc>
+      <arc id="ID1427743407"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1413640906"/>
+        <placeend idref="ID1427720804"/>
+        <annot id="ID1427743408">
+          <posattr x="-373.000000"
+                   y="-1056.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patient</text>
         </annot>
       </arc>
       <constraints/>
@@ -8272,7 +8976,7 @@ end;</layout>
                   type="Solid"/>
         <textattr colour="Black"
                   bold="false"/>
-        <text>Note</text>
+        <text>Notes</text>
         <ellipse w="144.000000"
                  h="40.000000"/>
         <token x="-10.000000"
@@ -8285,7 +8989,7 @@ end;</layout>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1416403205">
-          <posattr x="930.000000"
+          <posattr x="928.000000"
                    y="-428.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -8296,10 +9000,10 @@ end;</layout>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">STRING</text>
+                version="4.0.1">NOTES</text>
         </type>
         <initmark id="ID1416403206">
-          <posattr x="939.000000"
+          <posattr x="920.000000"
                    y="-381.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -8310,7 +9014,7 @@ end;</layout>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1"/>
+                version="4.0.1">1`[]</text>
         </initmark>
       </place>
       <place id="ID1421433996">
@@ -8522,7 +9226,7 @@ end;</layout>
         </initmark>
       </place>
       <place id="ID1421680589">
-        <posattr x="522.000000"
+        <posattr x="430.000000"
                  y="25.000000"/>
         <fillattr colour="White"
                   pattern=""
@@ -8537,16 +9241,16 @@ end;</layout>
                  h="40.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
-        <marking x="0.000000"
-                 y="0.000000"
+        <marking x="-30.000000"
+                 y="33.750000"
                  hidden="false">
           <snap snap_id="0"
-                anchor.horizontal="0"
-                anchor.vertical="0"/>
+                anchor.horizontal="2"
+                anchor.vertical="2"/>
         </marking>
         <type id="ID1421680590">
-          <posattr x="596.500000"
-                   y="1.000000"/>
+          <posattr x="343.500000"
+                   y="-76.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -8556,10 +9260,10 @@ end;</layout>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">PERSON_ID</text>
+                version="4.0.1">PERSON_IDS</text>
         </type>
-        <initmark id="ID1421680591">
-          <posattr x="592.000000"
+        <initmark id="ID1427732360">
+          <posattr x="500.000000"
                    y="48.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -8572,11 +9276,24 @@ end;</layout>
           <text tool="CPN Tools"
                 version="4.0.1"/>
         </initmark>
+        <port id="ID1427463684"
+              type="I/O">
+          <posattr x="430.000000"
+                   y="25.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </port>
       </place>
       <trans id="ID1416391531"
              explicit="false">
         <posattr x="854.000000"
-                 y="-518.000000"/>
+                 y="-520.000000"/>
         <fillattr colour="White"
                   pattern=""
                   filled="false"/>
@@ -8592,7 +9309,7 @@ end;</layout>
                  y="-3.000000"/>
         <cond id="ID1416391532">
           <posattr x="752.367953"
-                   y="-487.000000"/>
+                   y="-489.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -8606,7 +9323,7 @@ end;</layout>
         </cond>
         <time id="ID1416391533">
           <posattr x="961.132047"
-                   y="-487.000000"/>
+                   y="-489.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -8620,7 +9337,7 @@ end;</layout>
         </time>
         <code id="ID1416391534">
           <posattr x="981.132047"
-                   y="-570.000000"/>
+                   y="-572.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -8634,7 +9351,7 @@ end;</layout>
         </code>
         <priority id="ID1416391536">
           <posattr x="723.367953"
-                   y="-549.000000"/>
+                   y="-551.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -8842,7 +9559,7 @@ openConnection(&quot;uploadPhysicianNotes&quot;,&quot;localhost&quot;,9005);</te
                 version="4.0.1"/>
         </time>
         <code id="ID1421521725">
-          <posattr x="1093.500000"
+          <posattr x="1095.500000"
                    y="-312.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -8853,9 +9570,9 @@ openConnection(&quot;uploadPhysicianNotes&quot;,&quot;localhost&quot;,9005);</te
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">input(text);
+                version="4.0.1">input(note);
 action
-send(&quot;uploadPhysicianNotes&quot;,text,stringEncode);</text>
+send(&quot;uploadPhysicianNotes&quot;,note,stringEncode);</text>
         </code>
         <priority id="ID1421521727">
           <posattr x="736.000000"
@@ -8967,7 +9684,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
         <placeend idref="ID1416391542"/>
         <annot id="ID1416391546">
           <posattr x="902.000000"
-                   y="-590.000000"/>
+                   y="-591.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -8997,8 +9714,9 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1416391531"/>
         <placeend idref="ID1416403204"/>
-        <annot id="ID1416411517">
-          <posattr x="916.000000"
+        <bendpoint id="ID1427384163"
+                   serial="1">
+          <posattr x="896.000000"
                    y="-462.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -9008,8 +9726,20 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                     type="Solid"/>
           <textattr colour="Black"
                     bold="false"/>
+        </bendpoint>
+        <annot id="ID1416411517">
+          <posattr x="991.000000"
+                   y="-453.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">#2(physicianNote)</text>
+                version="4.0.1">notes^^[#2(physicianNote)]</text>
         </annot>
       </arc>
       <arc id="ID1416416240"
@@ -9030,8 +9760,8 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
         <transend idref="ID1416415058"/>
         <placeend idref="ID1416391537"/>
         <annot id="ID1416416241">
-          <posattr x="884.000000"
-                   y="69.000000"/>
+          <posattr x="871.000000"
+                   y="85.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -9061,7 +9791,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1421436483"/>
         <placeend idref="ID1421433996"/>
-        <annot id="ID1427254155">
+        <annot id="ID1427755870">
           <posattr x="1464.000000"
                    y="-477.000000"/>
           <fillattr colour="White"
@@ -9093,7 +9823,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1421436483"/>
         <placeend idref="ID1421514030"/>
-        <annot id="ID1427254156">
+        <annot id="ID1427755871">
           <posattr x="1464.000000"
                    y="-357.000000"/>
           <fillattr colour="White"
@@ -9125,9 +9855,22 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1421521722"/>
         <placeend idref="ID1416403204"/>
+        <bendpoint id="ID1427391556"
+                   serial="1">
+          <posattr x="901.000000"
+                   y="-362.750000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
         <annot id="ID1421550030">
-          <posattr x="871.500000"
-                   y="-358.000000"/>
+          <posattr x="942.500000"
+                   y="-359.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -9137,7 +9880,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">text</text>
+                version="4.0.1">note::notes</text>
         </annot>
       </arc>
       <arc id="ID1421573481"
@@ -9157,7 +9900,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1421521722"/>
         <placeend idref="ID1421570859"/>
-        <annot id="ID1427254157">
+        <annot id="ID1427755872">
           <posattr x="872.000000"
                    y="-272.000000"/>
           <fillattr colour="White"
@@ -9189,7 +9932,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1421576129"/>
         <placeend idref="ID1421570859"/>
-        <annot id="ID1427254158">
+        <annot id="ID1427755873">
           <posattr x="872.000000"
                    y="-192.000000"/>
           <fillattr colour="White"
@@ -9287,8 +10030,8 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
         <placeend idref="ID1421680589"/>
         <bendpoint id="ID1421738722"
                    serial="1">
-          <posattr x="522.000000"
-                   y="-518.000000"/>
+          <posattr x="401.000000"
+                   y="-535.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -9299,8 +10042,8 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1421691564">
-          <posattr x="643.000000"
-                   y="-507.000000"/>
+          <posattr x="583.000000"
+                   y="-524.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -9310,7 +10053,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">#1(physicianNote)</text>
+                version="4.0.1">patientIds^^[#1(physicianNote)]</text>
         </annot>
       </arc>
       <arc id="ID1421710878"
@@ -9330,9 +10073,22 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1416415058"/>
         <placeend idref="ID1421680589"/>
+        <bendpoint id="ID1427373436"
+                   serial="1">
+          <posattr x="559.750000"
+                   y="12.250000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
         <annot id="ID1421710879">
-          <posattr x="632.000000"
-                   y="36.000000"/>
+          <posattr x="584.000000"
+                   y="1.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -9342,7 +10098,187 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">patientId</text>
+                version="4.0.1">patientId::patientIds</text>
+        </annot>
+      </arc>
+      <arc id="ID1427360349"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1416391531"/>
+        <placeend idref="ID1421680589"/>
+        <bendpoint id="ID1427361969"
+                   serial="1">
+          <posattr x="451.000000"
+                   y="-504.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427360350">
+          <posattr x="611.000000"
+                   y="-493.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patientIds</text>
+        </annot>
+      </arc>
+      <arc id="ID1427369868"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1416415058"/>
+        <placeend idref="ID1421680589"/>
+        <bendpoint id="ID1427371640"
+                   serial="1">
+          <posattr x="574.750000"
+                   y="42.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427369869">
+          <posattr x="572.000000"
+                   y="53.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patientIds</text>
+        </annot>
+      </arc>
+      <arc id="ID1427386807"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1416391531"/>
+        <placeend idref="ID1416403204"/>
+        <bendpoint id="ID1427387478"
+                   serial="1">
+          <posattr x="813.000000"
+                   y="-462.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427386808">
+          <posattr x="791.000000"
+                   y="-453.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">notes</text>
+        </annot>
+      </arc>
+      <arc id="ID1427390866"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1421521722"/>
+        <placeend idref="ID1416403204"/>
+        <bendpoint id="ID1427390868"
+                   serial="1">
+          <posattr x="816.000000"
+                   y="-378.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </bendpoint>
+        <annot id="ID1427390867">
+          <posattr x="838.000000"
+                   y="-355.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">notes</text>
         </annot>
       </arc>
       <constraints/>
@@ -9531,6 +10467,71 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                     bold="false"/>
         </port>
       </place>
+      <place id="ID1427677558">
+        <posattr x="378.000000"
+                 y="-788.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Patient Message Count</text>
+        <ellipse w="252.000000"
+                 h="40.000000"/>
+        <token x="-10.000000"
+               y="0.000000"/>
+        <marking x="0.000000"
+                 y="0.000000"
+                 hidden="false">
+          <snap snap_id="0"
+                anchor.horizontal="0"
+                anchor.vertical="0"/>
+        </marking>
+        <type id="ID1427677559">
+          <posattr x="554.500000"
+                   y="-811.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">PATIENT_MESSAGE_COUNT</text>
+        </type>
+        <initmark id="ID1427677560">
+          <posattr x="501.000000"
+                   y="-764.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </initmark>
+        <port id="ID1427680773"
+              type="In">
+          <posattr x="378.000000"
+                   y="-788.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </port>
+      </place>
       <trans id="ID1425199550"
              explicit="false">
         <posattr x="924.000000"
@@ -9547,7 +10548,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
         <box w="224.000000"
              h="40.000000"/>
         <subst subpage="ID1425199562"
-               portsock="(ID1425199570,ID1415845465)(ID1425353074,ID1424151950)(ID1425199581,ID1415845528)">
+               portsock="(ID1425199570,ID1415845465)(ID1425353074,ID1424151950)(ID1425199581,ID1415845528)(ID1426795398,ID1427677558)">
           <subpageinfo id="ID1425199600"
                        name="Create Examination Summary">
             <posattr x="924.000000"
@@ -9747,6 +10748,38 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                     bold="false"/>
           <text tool="CPN Tools"
                 version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427678836"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1425199550"/>
+        <placeend idref="ID1427677558"/>
+        <annot id="ID1427678837">
+          <posattr x="644.000000"
+                   y="-777.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patientMessageCount</text>
         </annot>
       </arc>
       <constraints/>
@@ -9986,7 +11019,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                 version="4.0.1">UNIT</text>
         </type>
         <initmark id="ID1427001859">
-          <posattr x="1260.000000"
+          <posattr x="1232.000000"
                    y="-614.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -9997,7 +11030,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1"/>
+                version="4.0.1">1`()</text>
         </initmark>
       </place>
       <place id="ID1425363442">
@@ -10219,8 +11252,8 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                   type="Solid"/>
         <textattr colour="Black"
                   bold="false"/>
-        <text>Done</text>
-        <ellipse w="102.000000"
+        <text>PatientMessageCount</text>
+        <ellipse w="182.000000"
                  h="40.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
@@ -10232,8 +11265,8 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1426795399">
-          <posattr x="977.000000"
-                   y="-653.000000"/>
+          <posattr x="924.000000"
+                   y="-599.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -10243,10 +11276,10 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">UNIT</text>
+                version="4.0.1">PATIENT_MESSAGE_COUNT</text>
         </type>
         <initmark id="ID1426795400">
-          <posattr x="994.000000"
+          <posattr x="1023.000000"
                    y="-606.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -10259,6 +11292,19 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
           <text tool="CPN Tools"
                 version="4.0.1"/>
         </initmark>
+        <port id="ID1427693657"
+              type="In">
+          <posattr x="856.000000"
+                   y="-646.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </port>
       </place>
       <trans id="ID1425199564"
              explicit="false">
@@ -10278,8 +11324,8 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
         <binding x="7.200000"
                  y="-3.000000"/>
         <cond id="ID1426786875">
-          <posattr x="787.500000"
-                   y="-755.000000"/>
+          <posattr x="1061.000000"
+                   y="-746.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -10289,7 +11335,7 @@ receive(&quot;uploadPhysicianNotes&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1"/>
+                version="4.0.1">[(#2(patientMessageCount))=0]</text>
         </cond>
         <time id="ID1425199566">
           <posattr x="1066.000000"
@@ -10610,7 +11656,7 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1425362098"/>
         <placeend idref="ID1425361428"/>
-        <annot id="ID1427254159">
+        <annot id="ID1427755874">
           <posattr x="1291.000000"
                    y="-627.000000"/>
           <fillattr colour="White"
@@ -10642,7 +11688,7 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1425362098"/>
         <placeend idref="ID1425363442"/>
-        <annot id="ID1427254160">
+        <annot id="ID1427755875">
           <posattr x="1422.000000"
                    y="-581.000000"/>
           <fillattr colour="White"
@@ -10674,7 +11720,7 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1425199564"/>
         <placeend idref="ID1425371500"/>
-        <annot id="ID1427254161">
+        <annot id="ID1427755876">
           <posattr x="942.000000"
                    y="-834.000000"/>
           <fillattr colour="White"
@@ -10911,7 +11957,7 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1425403810"/>
         <placeend idref="ID1425371500"/>
-        <annot id="ID1427254162">
+        <annot id="ID1427755877">
           <posattr x="942.000000"
                    y="-924.000000"/>
           <fillattr colour="White"
@@ -10944,7 +11990,7 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
         <transend idref="ID1425199564"/>
         <placeend idref="ID1425199581"/>
         <annot id="ID1426794783">
-          <posattr x="795.000000"
+          <posattr x="803.500000"
                    y="-693.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -10955,7 +12001,7 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1"/>
+                version="4.0.1">patient</text>
         </annot>
       </arc>
       <arc id="ID1426796336"
@@ -10975,8 +12021,8 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1425199564"/>
         <placeend idref="ID1426795398"/>
-        <annot id="ID1427254163">
-          <posattr x="942.000000"
+        <annot id="ID1427605219">
+          <posattr x="997.500000"
                    y="-708.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -10987,7 +12033,7 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">1`()</text>
+                version="4.0.1">patientMessageCount</text>
         </annot>
       </arc>
       <constraints/>
@@ -11062,10 +12108,10 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
                  h="40.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
-        <marking x="21.000000"
-                 y="-21.000000"
+        <marking x="-1.000000"
+                 y="0.000000"
                  hidden="false">
-          <snap snap_id="0"
+          <snap snap_id="2"
                 anchor.horizontal="1"
                 anchor.vertical="1"/>
         </marking>
@@ -11699,12 +12745,12 @@ receive(&quot;createSummary&quot;,stringDecode);</text>
                  h="40.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
-        <marking x="0.000000"
-                 y="0.000000"
+        <marking x="-59.000000"
+                 y="-85.000000"
                  hidden="false">
           <snap snap_id="0"
-                anchor.horizontal="0"
-                anchor.vertical="0"/>
+                anchor.horizontal="3"
+                anchor.vertical="1"/>
         </marking>
         <type id="ID1424719459">
           <posattr x="1608.500000"
@@ -11974,12 +13020,12 @@ Acknowledged Subscription Ids</text>
                  h="40.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
-        <marking x="0.000000"
-                 y="0.000000"
+        <marking x="-8.000000"
+                 y="-71.000000"
                  hidden="false">
           <snap snap_id="0"
-                anchor.horizontal="0"
-                anchor.vertical="0"/>
+                anchor.horizontal="1"
+                anchor.vertical="1"/>
         </marking>
         <type id="ID1426838442">
           <posattr x="1390.000000"
@@ -16827,7 +17873,7 @@ receive(&quot;imageProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1417242081"/>
         <placeend idref="ID1417239912"/>
-        <annot id="ID1427254164">
+        <annot id="ID1427755878">
           <posattr x="280.000000"
                    y="-204.000000"/>
           <fillattr colour="White"
@@ -16859,7 +17905,7 @@ receive(&quot;imageProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1417242081"/>
         <placeend idref="ID1417249457"/>
-        <annot id="ID1427254165">
+        <annot id="ID1427755879">
           <posattr x="280.000000"
                    y="-288.000000"/>
           <fillattr colour="White"
@@ -16955,7 +18001,7 @@ receive(&quot;imageProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1417255471"/>
         <placeend idref="ID1417276017"/>
-        <annot id="ID1427254166">
+        <annot id="ID1427755880">
           <posattr x="660.000000"
                    y="-392.000000"/>
           <fillattr colour="White"
@@ -16987,7 +18033,7 @@ receive(&quot;imageProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1417281055"/>
         <placeend idref="ID1417276017"/>
-        <annot id="ID1427254167">
+        <annot id="ID1427755881">
           <posattr x="660.000000"
                    y="-497.000000"/>
           <fillattr colour="White"
@@ -18238,7 +19284,7 @@ receive(&quot;textProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1423702870"/>
         <placeend idref="ID1423702898"/>
-        <annot id="ID1427254168">
+        <annot id="ID1427755882">
           <posattr x="1660.000000"
                    y="-73.000000"/>
           <fillattr colour="White"
@@ -18270,7 +19316,7 @@ receive(&quot;textProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1423702870"/>
         <placeend idref="ID1423702905"/>
-        <annot id="ID1427254169">
+        <annot id="ID1427755883">
           <posattr x="1905.000000"
                    y="-73.000000"/>
           <fillattr colour="White"
@@ -18334,7 +19380,7 @@ receive(&quot;textProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1423702876"/>
         <placeend idref="ID1423702911"/>
-        <annot id="ID1427254170">
+        <annot id="ID1427755884">
           <posattr x="2045.000000"
                    y="-264.000000"/>
           <fillattr colour="White"
@@ -18366,7 +19412,7 @@ receive(&quot;textProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1423702882"/>
         <placeend idref="ID1423702911"/>
-        <annot id="ID1427254171">
+        <annot id="ID1427755885">
           <posattr x="2045.000000"
                    y="-362.000000"/>
           <fillattr colour="White"
@@ -19764,7 +20810,7 @@ receive(&quot;videoProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1426879514"/>
         <placeend idref="ID1426878917"/>
-        <annot id="ID1427254172">
+        <annot id="ID1427755886">
           <posattr x="1373.000000"
                    y="72.000000"/>
           <fillattr colour="White"
@@ -19796,7 +20842,7 @@ receive(&quot;videoProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1426879514"/>
         <placeend idref="ID1426880111"/>
-        <annot id="ID1427254173">
+        <annot id="ID1427755887">
           <posattr x="1650.000000"
                    y="72.000000"/>
           <fillattr colour="White"
@@ -19892,7 +20938,7 @@ receive(&quot;videoProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1426887215"/>
         <placeend idref="ID1426888457"/>
-        <annot id="ID1427254174">
+        <annot id="ID1427755888">
           <posattr x="1645.000000"
                    y="-370.000000"/>
           <fillattr colour="White"
@@ -19924,7 +20970,7 @@ receive(&quot;videoProcess&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1426889715"/>
         <placeend idref="ID1426888457"/>
-        <annot id="ID1427254175">
+        <annot id="ID1427755889">
           <posattr x="1645.000000"
                    y="-472.000000"/>
           <fillattr colour="White"
@@ -20959,6 +22005,71 @@ receive(&quot;videoProcess&quot;,stringDecode);</text>
                     bold="false"/>
         </port>
       </place>
+      <place id="ID1427612752">
+        <posattr x="-601.000000"
+                 y="-980.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Patient Message Count</text>
+        <ellipse w="192.000000"
+                 h="56.000000"/>
+        <token x="-10.000000"
+               y="0.000000"/>
+        <marking x="0.000000"
+                 y="0.000000"
+                 hidden="false">
+          <snap snap_id="0"
+                anchor.horizontal="0"
+                anchor.vertical="0"/>
+        </marking>
+        <type id="ID1427612753">
+          <posattr x="-444.500000"
+                   y="-1009.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">PATIENT_MESSAGE_COUNT</text>
+        </type>
+        <initmark id="ID1427612754">
+          <posattr x="-498.000000"
+                   y="-950.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </initmark>
+        <port id="ID1427614011"
+              type="Out">
+          <posattr x="-601.000000"
+                   y="-980.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </port>
+      </place>
       <trans id="ID1425657352"
              explicit="false">
         <posattr x="-661.000000"
@@ -21762,6 +22873,38 @@ receive(&quot;videoProcess&quot;,stringDecode);</text>
                     bold="false"/>
           <text tool="CPN Tools"
                 version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427613634"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1425657364"/>
+        <placeend idref="ID1427612752"/>
+        <annot id="ID1427613635">
+          <posattr x="-322.000000"
+                   y="-969.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">(#personId(person1),0)</text>
         </annot>
       </arc>
       <constraints/>
@@ -23053,7 +24196,7 @@ receive(&quot;uploadMetrics&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1417536140"/>
         <placeend idref="ID1417516820"/>
-        <annot id="ID1427254176">
+        <annot id="ID1427755890">
           <posattr x="648.000000"
                    y="-801.000000"/>
           <fillattr colour="White"
@@ -23085,7 +24228,7 @@ receive(&quot;uploadMetrics&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1417536140"/>
         <placeend idref="ID1417553201"/>
-        <annot id="ID1427254177">
+        <annot id="ID1427755891">
           <posattr x="648.000000"
                    y="-675.000000"/>
           <fillattr colour="White"
@@ -23149,7 +24292,7 @@ receive(&quot;uploadMetrics&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1417591747"/>
         <placeend idref="ID1417653276"/>
-        <annot id="ID1427254178">
+        <annot id="ID1427755892">
           <posattr x="648.000000"
                    y="-273.000000"/>
           <fillattr colour="White"
@@ -23181,7 +24324,7 @@ receive(&quot;uploadMetrics&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1417795835"/>
         <placeend idref="ID1417653276"/>
-        <annot id="ID1427254179">
+        <annot id="ID1427755893">
           <posattr x="411.000000"
                    y="-220.000000"/>
           <fillattr colour="White"
@@ -25699,7 +26842,7 @@ receive(&quot;uploadVideo&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420994244"/>
         <placeend idref="ID1420986891"/>
-        <annot id="ID1427254180">
+        <annot id="ID1427755894">
           <posattr x="299.000000"
                    y="-552.000000"/>
           <fillattr colour="White"
@@ -25731,7 +26874,7 @@ receive(&quot;uploadVideo&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420994244"/>
         <placeend idref="ID1421005348"/>
-        <annot id="ID1427254181">
+        <annot id="ID1427755895">
           <posattr x="299.000000"
                    y="-444.000000"/>
           <fillattr colour="White"
@@ -25795,7 +26938,7 @@ receive(&quot;uploadVideo&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1421062357"/>
         <placeend idref="ID1421078042"/>
-        <annot id="ID1427254182">
+        <annot id="ID1427755896">
           <posattr x="-234.000000"
                    y="-367.000000"/>
           <fillattr colour="White"
@@ -25827,7 +26970,7 @@ receive(&quot;uploadVideo&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1421103918"/>
         <placeend idref="ID1421078042"/>
-        <annot id="ID1427254183">
+        <annot id="ID1427755897">
           <posattr x="-234.000000"
                    y="-263.000000"/>
           <fillattr colour="White"
@@ -26943,7 +28086,7 @@ receive(&quot;uploadImage&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420362606"/>
         <placeend idref="ID1420361213"/>
-        <annot id="ID1427254184">
+        <annot id="ID1427755898">
           <posattr x="-641.000000"
                    y="-441.000000"/>
           <fillattr colour="White"
@@ -26975,7 +28118,7 @@ receive(&quot;uploadImage&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420362606"/>
         <placeend idref="ID1420365614"/>
-        <annot id="ID1427254185">
+        <annot id="ID1427755899">
           <posattr x="-641.000000"
                    y="-328.000000"/>
           <fillattr colour="White"
@@ -27084,7 +28227,7 @@ receive(&quot;uploadImage&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420421724"/>
         <placeend idref="ID1420432050"/>
-        <annot id="ID1427254186">
+        <annot id="ID1427755900">
           <posattr x="-906.000000"
                    y="-223.000000"/>
           <fillattr colour="White"
@@ -27116,7 +28259,7 @@ receive(&quot;uploadImage&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420433850"/>
         <placeend idref="ID1420432050"/>
-        <annot id="ID1427254187">
+        <annot id="ID1427755901">
           <posattr x="-906.000000"
                    y="-134.000000"/>
           <fillattr colour="White"
@@ -28441,7 +29584,7 @@ receive(&quot;uploadImage&quot;,stringDecode);</text>
                 version="4.0.1">UNIT</text>
         </type>
         <initmark id="ID1420495352">
-          <posattr x="79.000000"
+          <posattr x="70.000000"
                    y="-480.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -29254,7 +30397,7 @@ receive(&quot;uploadMedicalHistory&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420496004"/>
         <placeend idref="ID1420495350"/>
-        <annot id="ID1427254189">
+        <annot id="ID1427755902">
           <posattr x="30.000000"
                    y="-432.000000"/>
           <fillattr colour="White"
@@ -29286,7 +30429,7 @@ receive(&quot;uploadMedicalHistory&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420496004"/>
         <placeend idref="ID1420497284"/>
-        <annot id="ID1427254190">
+        <annot id="ID1427755903">
           <posattr x="30.000000"
                    y="-307.000000"/>
           <fillattr colour="White"
@@ -29350,7 +30493,7 @@ receive(&quot;uploadMedicalHistory&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420546085"/>
         <placeend idref="ID1420588425"/>
-        <annot id="ID1427254192">
+        <annot id="ID1427755904">
           <posattr x="-292.000000"
                    y="-199.000000"/>
           <fillattr colour="White"
@@ -29382,7 +30525,7 @@ receive(&quot;uploadMedicalHistory&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420595317"/>
         <placeend idref="ID1420588425"/>
-        <annot id="ID1427254193">
+        <annot id="ID1427755905">
           <posattr x="-292.000000"
                    y="-100.000000"/>
           <fillattr colour="White"
@@ -30485,7 +31628,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1413460796"/>
         <placeend idref="ID1420726420"/>
-        <annot id="ID1427254194">
+        <annot id="ID1427755906">
           <posattr x="230.000000"
                    y="-680.000000"/>
           <fillattr colour="White"
@@ -30517,7 +31660,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420729121"/>
         <placeend idref="ID1420726420"/>
-        <annot id="ID1427254195">
+        <annot id="ID1427755907">
           <posattr x="408.000000"
                    y="-614.000000"/>
           <fillattr colour="White"
@@ -30549,7 +31692,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420729121"/>
         <placeend idref="ID1420730489"/>
-        <annot id="ID1427254196">
+        <annot id="ID1427755908">
           <posattr x="408.000000"
                    y="-483.000000"/>
           <fillattr colour="White"
@@ -30613,7 +31756,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420748177"/>
         <placeend idref="ID1420730489"/>
-        <annot id="ID1427254197">
+        <annot id="ID1427755909">
           <posattr x="221.000000"
                    y="-419.000000"/>
           <fillattr colour="White"
@@ -30645,7 +31788,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420748177"/>
         <placeend idref="ID1413460790"/>
-        <annot id="ID1427254198">
+        <annot id="ID1427755910">
           <posattr x="44.000000"
                    y="-383.000000"/>
           <fillattr colour="White"
@@ -30677,7 +31820,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                    currentcyckle="2"/>
         <transend idref="ID1420813249"/>
         <placeend idref="ID1413460790"/>
-        <annot id="ID1427254199">
+        <annot id="ID1427755911">
           <posattr x="44.000000"
                    y="-294.000000"/>
           <fillattr colour="White"
@@ -31215,8 +32358,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         </port>
       </place>
       <place id="ID1426946613">
-        <posattr x="-42.000000"
-                 y="-481.000000"/>
+        <posattr x="-126.000000"
+                 y="-494.000000"/>
         <fillattr colour="White"
                   pattern=""
                   filled="false"/>
@@ -31238,8 +32381,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1426946614">
-          <posattr x="9.000000"
-                   y="-531.000000"/>
+          <posattr x="-75.000000"
+                   y="-544.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -31252,8 +32395,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1">TOPIC_MESSAGE_CONTENT</text>
         </type>
         <initmark id="ID1426946615">
-          <posattr x="90.000000"
-                   y="-457.000000"/>
+          <posattr x="7.000000"
+                   y="-470.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -31267,8 +32410,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         </initmark>
         <port id="ID1426946905"
               type="In">
-          <posattr x="-142.000000"
-                   y="-497.000000"/>
+          <posattr x="-226.000000"
+                   y="-510.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -31994,6 +33137,71 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                     bold="false"/>
         </port>
       </place>
+      <place id="ID1427583992">
+        <posattr x="228.000000"
+                 y="-504.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Patient Message Count</text>
+        <ellipse w="204.000000"
+                 h="40.000000"/>
+        <token x="-10.000000"
+               y="0.000000"/>
+        <marking x="0.000000"
+                 y="0.000000"
+                 hidden="false">
+          <snap snap_id="0"
+                anchor.horizontal="0"
+                anchor.vertical="0"/>
+        </marking>
+        <type id="ID1427583993">
+          <posattr x="387.500000"
+                   y="-527.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">PATIENT_MESSAGE_COUNT</text>
+        </type>
+        <initmark id="ID1427583994">
+          <posattr x="334.000000"
+                   y="-480.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </initmark>
+        <port id="ID1427618658"
+              type="I/O">
+          <posattr x="228.000000"
+                   y="-504.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </port>
+      </place>
       <trans id="ID1426946568"
              explicit="false">
         <posattr x="-126.000000"
@@ -32010,7 +33218,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <box w="202.540800"
              h="47.372800"/>
         <subst subpage="ID1412760875"
-               portsock="(ID1412760936,ID1426946593)(ID1412760946,ID1426946638)(ID1412760951,ID1426946565)(ID1412789707,ID1426946653)(ID1412794941,ID1426946623)(ID1416425515,ID1426946613)(ID1424410081,ID1426946598)(ID1425672999,ID1427006375)(ID1427213578,ID1427198484)">
+               portsock="(ID1412760936,ID1426946593)(ID1412760946,ID1426946638)(ID1412760951,ID1426946565)(ID1412789707,ID1426946653)(ID1412794941,ID1426946623)(ID1416425515,ID1426946613)(ID1424410081,ID1426946598)(ID1425672999,ID1427006375)(ID1427213578,ID1427198484)(ID1427629785,ID1427583992)">
           <subpageinfo id="ID1426946842"
                        name="Publish">
             <posattr x="-206.270400"
@@ -32100,7 +33308,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <box w="166.228000"
              h="40.000000"/>
         <subst subpage="ID1412844461"
-               portsock="(ID1412844520,ID1426946648)(ID1412844525,ID1426946565)(ID1412844532,ID1426946588)(ID1412844537,ID1426946608)(ID1412844542,ID1426946643)(ID1412844547,ID1426946618)(ID1412844552,ID1426946603)(ID1423790769,ID1426946633)(ID1424507677,ID1426946628)(ID1427285313,ID1427277264)">
+               portsock="(ID1412844520,ID1426946648)(ID1412844525,ID1426946565)(ID1412844532,ID1426946588)(ID1412844537,ID1426946608)(ID1412844542,ID1426946643)(ID1412844547,ID1426946618)(ID1412844552,ID1426946603)(ID1423790769,ID1426946633)(ID1424507677,ID1426946628)(ID1427285313,ID1427277264)(ID1427651046,ID1427583992)">
           <subpageinfo id="ID1426946864"
                        name="Subscribe">
             <posattr x="474.886000"
@@ -32533,7 +33741,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <placeend idref="ID1426946613"/>
         <bendpoint id="ID1426946518"
                    serial="1">
-          <posattr x="-42.000000"
+          <posattr x="-98.000000"
                    y="-378.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -33054,12 +34262,140 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1"/>
         </annot>
       </arc>
+      <arc id="ID1427619959"
+           orientation="PtoT"
+           order="2">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1426946568"/>
+        <placeend idref="ID1427583992"/>
+        <annot id="ID1427619960">
+          <posattr x="76.000000"
+                   y="-366.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427642631"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1426946568"/>
+        <placeend idref="ID1427583992"/>
+        <annot id="ID1427642632">
+          <posattr x="53.000000"
+                   y="-366.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427649066"
+           orientation="TtoP"
+           order="2">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1426946574"/>
+        <placeend idref="ID1427583992"/>
+        <annot id="ID1427649067">
+          <posattr x="377.000000"
+                   y="-364.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
+      <arc id="ID1427649552"
+           orientation="PtoT"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1426946574"/>
+        <placeend idref="ID1427583992"/>
+        <annot id="ID1427649553">
+          <posattr x="356.000000"
+                   y="-364.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </annot>
+      </arc>
       <constraints/>
     </page>
     <page id="ID1412760875">
       <pageattr name="Publish"/>
       <place id="ID1412760877">
-        <posattr x="-294.000000"
+        <posattr x="-262.000000"
                  y="-378.000000"/>
         <fillattr colour="White"
                   pattern=""
@@ -33082,7 +34418,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1412760878">
-          <posattr x="-294.000000"
+          <posattr x="-262.000000"
                    y="-409.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -33096,7 +34432,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1">MESSAGE</text>
         </type>
         <initmark id="ID1412760879">
-          <posattr x="-218.000000"
+          <posattr x="-186.000000"
                    y="-354.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -33111,8 +34447,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         </initmark>
       </place>
       <place id="ID1412760883">
-        <posattr x="-270.000000"
-                 y="-114.000000"/>
+        <posattr x="-252.000000"
+                 y="-84.000000"/>
         <fillattr colour="White"
                   pattern=""
                   filled="false"/>
@@ -33134,8 +34470,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1412760884">
-          <posattr x="-175.500000"
-                   y="-140.000000"/>
+          <posattr x="-157.500000"
+                   y="-110.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -33148,8 +34484,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1">MESSAGE_ID</text>
         </type>
         <initmark id="ID1412760885">
-          <posattr x="-212.000000"
-                   y="-90.000000"/>
+          <posattr x="-194.000000"
+                   y="-60.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -33163,8 +34499,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         </initmark>
       </place>
       <place id="ID1412760886">
-        <posattr x="54.000000"
-                 y="-126.000000"/>
+        <posattr x="210.000000"
+                 y="-107.000000"/>
         <fillattr colour="White"
                   pattern=""
                   filled="false"/>
@@ -33186,8 +34522,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 anchor.vertical="0"/>
         </marking>
         <type id="ID1412760887">
-          <posattr x="123.000000"
-                   y="-149.000000"/>
+          <posattr x="279.000000"
+                   y="-130.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -33200,8 +34536,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1">UNIT</text>
         </type>
         <initmark id="ID1412760888">
-          <posattr x="140.000000"
-                   y="-102.000000"/>
+          <posattr x="296.000000"
+                   y="-83.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -33851,9 +35187,74 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                     bold="false"/>
         </port>
       </place>
+      <place id="ID1427629785">
+        <posattr x="452.000000"
+                 y="-228.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Patient Message Count</text>
+        <ellipse w="198.000000"
+                 h="50.000000"/>
+        <token x="-10.000000"
+               y="0.000000"/>
+        <marking x="0.000000"
+                 y="0.000000"
+                 hidden="false">
+          <snap snap_id="0"
+                anchor.horizontal="0"
+                anchor.vertical="0"/>
+        </marking>
+        <type id="ID1427629786">
+          <posattr x="609.500000"
+                   y="-255.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">PATIENT_MESSAGE_COUNT</text>
+        </type>
+        <initmark id="ID1427629787">
+          <posattr x="556.000000"
+                   y="-200.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </initmark>
+        <port id="ID1427641323"
+              type="I/O">
+          <posattr x="452.000000"
+                   y="-228.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </port>
+      </place>
       <trans id="ID1412760892"
              explicit="false">
-        <posattr x="-294.000000"
+        <posattr x="-262.000000"
                  y="-228.000000"/>
         <fillattr colour="White"
                   pattern=""
@@ -33869,7 +35270,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <binding x="7.200000"
                  y="-3.000000"/>
         <cond id="ID1412760893">
-          <posattr x="-385.000000"
+          <posattr x="-353.000000"
                    y="-197.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -33883,7 +35284,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1"/>
         </cond>
         <time id="ID1412760894">
-          <posattr x="-197.500000"
+          <posattr x="-165.500000"
                    y="-197.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -33897,7 +35298,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1"/>
         </time>
         <code id="ID1412760895">
-          <posattr x="-177.500000"
+          <posattr x="-145.500000"
                    y="-280.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -33911,7 +35312,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1"/>
         </code>
         <priority id="ID1412760897">
-          <posattr x="-414.000000"
+          <posattr x="-382.000000"
                    y="-259.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -34610,7 +36011,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <placeend idref="ID1412760883"/>
         <bendpoint id="ID1414460568"
                    serial="1">
-          <posattr x="-241.000000"
+          <posattr x="-279.000000"
                    y="-168.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -34622,8 +36023,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1414244491">
-          <posattr x="-189.500000"
-                   y="-188.000000"/>
+          <posattr x="-350.500000"
+                   y="-157.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -34654,7 +36055,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <transend idref="ID1412760892"/>
         <placeend idref="ID1412760889"/>
         <annot id="ID1414244492">
-          <posattr x="-440.000000"
+          <posattr x="-424.000000"
                    y="-217.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -34670,7 +36071,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
       </arc>
       <arc id="ID1412760924"
            orientation="PtoT"
-           order="2">
+           order="1">
         <posattr x="0.000000"
                  y="0.000000"/>
         <fillattr colour="White"
@@ -34687,8 +36088,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <placeend idref="ID1412760883"/>
         <bendpoint id="ID1414457195"
                    serial="1">
-          <posattr x="-294.000000"
-                   y="-151.000000"/>
+          <posattr x="-210.000000"
+                   y="-168.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -34699,8 +36100,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                     bold="false"/>
         </bendpoint>
         <annot id="ID1414244494">
-          <posattr x="-290.000000"
-                   y="-180.000000"/>
+          <posattr x="-171.000000"
+                   y="-184.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -34731,8 +36132,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <transend idref="ID1412760892"/>
         <placeend idref="ID1412760877"/>
         <annot id="ID1414244496">
-          <posattr x="-93.500000"
-                   y="-292.000000"/>
+          <posattr x="-61.500000"
+                   y="-310.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -34763,7 +36164,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
         <transend idref="ID1412760898"/>
         <placeend idref="ID1412760877"/>
         <annot id="ID1414244498">
-          <posattr x="-123.000000"
+          <posattr x="-101.000000"
                    y="-367.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -35444,6 +36845,70 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1">topicMessageContent</text>
         </annot>
       </arc>
+      <arc id="ID1427634071"
+           orientation="PtoT"
+           order="2">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1412760892"/>
+        <placeend idref="ID1427629785"/>
+        <annot id="ID1427634072">
+          <posattr x="88.000000"
+                   y="-210.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patientMessageCount</text>
+        </annot>
+      </arc>
+      <arc id="ID1427634451"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1412760892"/>
+        <placeend idref="ID1427629785"/>
+        <annot id="ID1427634452">
+          <posattr x="88.000000"
+                   y="-246.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">(#1(patientMessageCount),(#2(patientMessageCount))+1)</text>
+        </annot>
+      </arc>
       <constraints/>
     </page>
     <page id="ID1412844461">
@@ -35516,12 +36981,12 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                  h="58.000000"/>
         <token x="-10.000000"
                y="0.000000"/>
-        <marking x="-30.000000"
-                 y="-28.000000"
+        <marking x="-35.000000"
+                 y="40.000000"
                  hidden="false">
           <snap snap_id="0"
                 anchor.horizontal="2"
-                anchor.vertical="1"/>
+                anchor.vertical="2"/>
         </marking>
         <type id="ID1412844473">
           <posattr x="737.500000"
@@ -35538,7 +37003,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
                 version="4.0.1">MESSAGES</text>
         </type>
         <initmark id="ID1422933803">
-          <posattr x="928.000000"
+          <posattr x="926.000000"
                    y="-221.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -35549,7 +37014,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">1 `[]</text>
+                version="4.0.1">1`[]</text>
         </initmark>
       </place>
       <place id="ID1412844520">
@@ -35979,8 +37444,8 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
           <text tool="CPN Tools"
                 version="4.0.1">MESSAGE_IDS</text>
         </type>
-        <initmark id="ID1412844554">
-          <posattr x="1352.000000"
+        <initmark id="ID1427740297">
+          <posattr x="1369.000000"
                    y="-732.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
@@ -35991,7 +37456,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">1 `[]</text>
+                version="4.0.1"/>
         </initmark>
         <port id="ID1412844690"
               type="In">
@@ -36296,6 +37761,71 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
               type="Out">
           <posattr x="1964.000000"
                    y="-16.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+        </port>
+      </place>
+      <place id="ID1427651046">
+        <posattr x="409.000000"
+                 y="-534.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <text>Patient Message Count</text>
+        <ellipse w="162.000000"
+                 h="58.000000"/>
+        <token x="-10.000000"
+               y="0.000000"/>
+        <marking x="0.000000"
+                 y="0.000000"
+                 hidden="false">
+          <snap snap_id="0"
+                anchor.horizontal="0"
+                anchor.vertical="0"/>
+        </marking>
+        <type id="ID1427651047">
+          <posattr x="339.000000"
+                   y="-583.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">PATIENT_MESSAGE_COUNT</text>
+        </type>
+        <initmark id="ID1427651048">
+          <posattr x="501.000000"
+                   y="-503.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1"/>
+        </initmark>
+        <port id="ID1427653552"
+              type="I/O">
+          <posattr x="409.000000"
+                   y="-534.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -36634,7 +38164,7 @@ receive(&quot;uploadPatientConcerns&quot;,stringDecode);</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">message::availableMessages</text>
+                version="4.0.1">message::messages</text>
         </annot>
       </arc>
       <arc id="ID1416859098"
@@ -36880,7 +38410,7 @@ else empty</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">availableMessages</text>
+                version="4.0.1">messages</text>
         </annot>
       </arc>
       <arc id="ID1422802363"
@@ -37134,7 +38664,7 @@ else empty</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">availableMessages</text>
+                version="4.0.1">messages</text>
         </annot>
       </arc>
       <arc id="ID1422773427"
@@ -37166,7 +38696,7 @@ else empty</text>
           <textattr colour="Black"
                     bold="false"/>
           <text tool="CPN Tools"
-                version="4.0.1">availableMessages^^[message]</text>
+                version="4.0.1">messages^^[message]</text>
         </annot>
       </arc>
       <arc id="ID1424507810"
@@ -37441,6 +38971,70 @@ else empty</text>
                 version="4.0.1">if getMessageTopic(message) = FINISHED_VIDEO_RECOGNITION 
 then 1 `message
 else empty</text>
+        </annot>
+      </arc>
+      <arc id="ID1427654063"
+           orientation="PtoT"
+           order="2">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1418147670"/>
+        <placeend idref="ID1427651046"/>
+        <annot id="ID1427654064">
+          <posattr x="530.500000"
+                   y="-614.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">patientMessageCount</text>
+        </annot>
+      </arc>
+      <arc id="ID1427654578"
+           orientation="TtoP"
+           order="1">
+        <posattr x="0.000000"
+                 y="0.000000"/>
+        <fillattr colour="White"
+                  pattern=""
+                  filled="false"/>
+        <lineattr colour="Black"
+                  thick="1"
+                  type="Solid"/>
+        <textattr colour="Black"
+                  bold="false"/>
+        <arrowattr headsize="1.200000"
+                   currentcyckle="2"/>
+        <transend idref="ID1418147670"/>
+        <placeend idref="ID1427651046"/>
+        <annot id="ID1427654579">
+          <posattr x="721.500000"
+                   y="-556.000000"/>
+          <fillattr colour="White"
+                    pattern="Solid"
+                    filled="false"/>
+          <lineattr colour="Black"
+                    thick="0"
+                    type="Solid"/>
+          <textattr colour="Black"
+                    bold="false"/>
+          <text tool="CPN Tools"
+                version="4.0.1">(#1(patientMessageCount),(#2(patientMessageCount))-1)</text>
         </annot>
       </arc>
       <constraints/>
@@ -37768,15 +39362,35 @@ else empty</text>
       </option>
     </options>
     <binders>
-      <cpnbinder id="ID1427250221"
-                 x="247"
-                 y="65"
+      <cpnbinder id="ID1427758714"
+                 x="338"
+                 y="38"
                  width="954"
                  height="483">
         <sheets>
-          <cpnsheet id="ID1427250172"
-                    panx="-793.000000"
-                    pany="1.950000"
+          <cpnsheet id="ID1427758701"
+                    panx="-1435.000000"
+                    pany="-673.000000"
+                    zoom="1.000000"
+                    instance="ID2149">
+            <zorder>
+              <position value="1"/>
+              <position value="2"/>
+              <position value="0"/>
+            </zorder>
+          </cpnsheet>
+          <cpnsheet id="ID1427758920"
+                    panx="-1046.000000"
+                    pany="-988.000000"
+                    zoom="1.000000"
+                    instance="ID1415845582">
+            <zorder>
+              <position value="0"/>
+            </zorder>
+          </cpnsheet>
+          <cpnsheet id="ID1427758957"
+                    panx="-909.412500"
+                    pany="-498.287500"
                     zoom="0.800000"
                     instance="ID2149">
             <zorder>
@@ -37785,46 +39399,8 @@ else empty</text>
               <position value="0"/>
             </zorder>
           </cpnsheet>
-          <cpnsheet id="ID1427257007"
-                    panx="-1542.000000"
-                    pany="-552.000000"
-                    zoom="1.000000"
-                    instance="ID1426871278">
-            <zorder>
-              <position value="0"/>
-            </zorder>
-          </cpnsheet>
-          <cpnsheet id="ID1427257544"
-                    panx="-428.950000"
-                    pany="-129.250000"
-                    zoom="0.800000"
-                    instance="ID1424720674">
-            <zorder>
-              <position value="0"/>
-            </zorder>
-          </cpnsheet>
-          <cpnsheet id="ID1427272311"
-                    panx="-633.000000"
-                    pany="-35.000000"
-                    zoom="1.000000"
-                    instance="ID1426946785">
-            <zorder>
-              <position value="0"/>
-            </zorder>
-          </cpnsheet>
-          <cpnsheet id="ID1427284047"
-                    panx="-1669.000000"
-                    pany="-102.000000"
-                    zoom="1.000000"
-                    instance="ID1412844612">
-            <zorder>
-              <position value="0"/>
-            </zorder>
-          </cpnsheet>
         </sheets>
         <zorder>
-          <position value="3"/>
-          <position value="4"/>
           <position value="0"/>
           <position value="2"/>
           <position value="1"/>
@@ -37928,19 +39504,20 @@ else empty</text>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="false"/>
-            <IndexNode expanded="true"/>
             <IndexNode expanded="false"/>
             <IndexNode expanded="false"/>
           </IndexNode>
-          <IndexNode expanded="true">
+          <IndexNode expanded="false">
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
@@ -37948,6 +39525,7 @@ else empty</text>
             <IndexNode expanded="false"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
             <IndexNode expanded="false"/>
             <IndexNode expanded="false"/>
             <IndexNode expanded="false"/>
@@ -37961,6 +39539,7 @@ else empty</text>
             <IndexNode expanded="false"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
             <IndexNode expanded="false"/>
             <IndexNode expanded="false"/>
             <IndexNode expanded="true"/>
@@ -37988,6 +39567,7 @@ else empty</text>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
             <IndexNode expanded="false"/>
           </IndexNode>
           <IndexNode expanded="false">
@@ -38003,6 +39583,7 @@ else empty</text>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
           </IndexNode>
           <IndexNode expanded="false">
             <IndexNode expanded="true"/>
@@ -38055,64 +39636,68 @@ else empty</text>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
             <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
           </IndexNode>
-          <IndexNode expanded="true">
+          <IndexNode expanded="false">
+            <IndexNode expanded="true"/>
+          </IndexNode>
+        </IndexNode>
+        <IndexNode expanded="false"/>
+        <IndexNode expanded="true">
+          <IndexNode expanded="false">
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
+          </IndexNode>
+          <IndexNode expanded="false">
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+          </IndexNode>
+          <IndexNode expanded="false">
+            <IndexNode expanded="true"/>
+            <IndexNode expanded="true"/>
+          </IndexNode>
+          <IndexNode expanded="false">
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
+            <IndexNode expanded="false"/>
             <IndexNode expanded="true"/>
           </IndexNode>
         </IndexNode>
         <IndexNode expanded="false">
           <IndexNode expanded="false">
             <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
             <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="false"/>
-          </IndexNode>
-          <IndexNode expanded="false">
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-          </IndexNode>
-          <IndexNode expanded="false">
-            <IndexNode expanded="true"/>
-            <IndexNode expanded="true"/>
-          </IndexNode>
-          <IndexNode expanded="false">
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
-          </IndexNode>
-        </IndexNode>
-        <IndexNode expanded="false">
-          <IndexNode expanded="true">
-            <IndexNode expanded="false"/>
-            <IndexNode expanded="false"/>
             <IndexNode expanded="true"/>
           </IndexNode>
         </IndexNode>
       </IndexNode>
-      <IndexNode expanded="false"/>
+      <IndexNode expanded="true"/>
       <IndexNode expanded="true">
         <IndexNode expanded="true">
           <IndexNode expanded="true"/>
         </IndexNode>
-        <IndexNode expanded="false">
+        <IndexNode expanded="true">
           <IndexNode expanded="true"/>
         </IndexNode>
-        <IndexNode expanded="true">
+        <IndexNode expanded="false">
           <IndexNode expanded="true"/>
           <IndexNode expanded="true"/>
           <IndexNode expanded="true"/>
@@ -38128,7 +39713,7 @@ else empty</text>
             <IndexNode expanded="true"/>
           </IndexNode>
         </IndexNode>
-        <IndexNode expanded="true">
+        <IndexNode expanded="false">
           <IndexNode expanded="true"/>
           <IndexNode expanded="true"/>
         </IndexNode>
