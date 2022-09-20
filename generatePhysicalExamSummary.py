@@ -21,9 +21,28 @@ def upload_exam_summary(htmlSummary):
 
 def get_object_entity_mentions(objectUris=["",""]):
 	out = ""
+	def map_entity_mentions(entity_mention):
+		return dict({
+			"type": entity_mention["type"],
+			"textContent": entity_mention["text"]["content"],
+			"confidence": entity_mention["confidence"]
+		})
+	def map_entities(entity):
+		return dict ({
+			"preferredTerm": entity["preferredTerm"],
+			"vocabularyCodes": entity["vocabularyCodes"]
+		})
 	for uri in objectUris:
+		
 		data = download_json(storage_client,uri)
-		out += json2html.convert(json = data)
+		table_data = dict({
+			"entityMentions": [],
+			"entities": []
+		})
+
+		table_data["entityMentions"] = map(map_entity_mentions,data["entityMentions"])
+		table_data["entities"] = map(map_entities, data["entities"])
+		out += json2html.convert(json = table_data)
 	return out
 
 def process_uri_list(uriList):
