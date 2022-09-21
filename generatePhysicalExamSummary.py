@@ -7,11 +7,10 @@ from json2html import *
 
 # Tested with Python v 3.7.2 and CPN Tools v 4.0.1
 
-port = 9996
-conn = PyCPN()
-conn.accept(port)
-load_dotenv()
-storage_client = storage.Client()
+# port = 9996
+# conn = PyCPN()
+# conn.accept(port)
+# load_dotenv()
 
 # Instantiate a Google Cloud Storage client and specify required bucket and file
 storage_client = storage.Client()
@@ -19,7 +18,7 @@ storage_client = storage.Client()
 def upload_exam_summary(htmlSummary):
 	return upload_html(storage_client, "vpe-exam-summary", htmlSummary)
 
-def get_object_entity_mentions(objectUris=["",""]):
+def get_object_entity_mentions(objectUris):
 	out = ""
 	def map_entity_mentions(entity_mention):
 		return dict({
@@ -40,25 +39,26 @@ def get_object_entity_mentions(objectUris=["",""]):
 			"entities": []
 		})
 
-		table_data["entityMentions"] = map(map_entity_mentions,data["entityMentions"])
-		table_data["entities"] = map(map_entities, data["entities"])
+		table_data["entityMentions"] = list(map(map_entity_mentions,data["entityMentions"]))
+		table_data["entities"] = list(map(map_entities, data["entities"]))
 		out += json2html.convert(json = table_data)
 	return out
 
-def process_uri_list(uriList):
+def process_uri_list(uriList = "gs://vpe-text-recognition/188dd913d59548b6bd427795e9005c8f.json,gs://vpe-text-recognition/c985aac5da024959888c56fa7c8e969d.json"):
+	print(uriList)
 	htmlSummary = get_object_entity_mentions(uriList.split(","))
 	return upload_exam_summary(htmlSummary)
 
-def doit():
-	while True:
-		objectUriList = stringDecode(conn.receive())
-		if objectUriList == 'quit':
-			conn.disconnect()
-			break
-		else:
-			summaryUri = process_uri_list(objectUriList)
-			conn.send(stringEncode(summaryUri))
+# def doit():
+# 	while True:
+# 		objectUriList = stringDecode(conn.receive())
+# 		if objectUriList == 'quit':
+# 			conn.disconnect()
+# 			break
+# 		else:
+# 			summaryUri = process_uri_list(objectUriList)
+# 			conn.send(stringEncode(summaryUri))
 
 if __name__ == "__main__":
-	doit()
+	process_uri_list()
 
