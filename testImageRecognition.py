@@ -1,8 +1,11 @@
 from pyCPN import PyCPN
 from util.pyEncodeDecode import stringEncode, stringDecode
 from dotenv import load_dotenv
-from google.cloud import storage, vision
+from google.cloud import storage, vision_v1
 from util.storage import upload_text
+
+load_dotenv()
+storage_client = storage.Client()
 
 # Tested with Python v 3.7.2 and CPN Tools v 4.0.1
 # Server for use with processWeatherClient.cpn model example
@@ -10,11 +13,9 @@ from util.storage import upload_text
 port = 9998
 conn = PyCPN()
 conn.accept(port)
-load_dotenv()
-storage_client = storage.Client()
 
-def get_joined_labels(imageUri):
-	client = vision.ImageAnnotatorClient()
+def get_joined_labels(imageUri = "gs://vpe-images/64e567ec584f430ebb892c77e18e9394"):
+	client = vision_v1.ImageAnnotatorClient()
 	
 	# The name of the image file to annotate
 	response = client.label_detection({
@@ -37,3 +38,5 @@ def doit():
 
 if __name__ == "__main__":
 	doit()
+	# url = upload_text(storage_client, "vpe-image-recognition", get_joined_labels())
+	# print(url)
