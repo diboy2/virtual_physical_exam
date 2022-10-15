@@ -10,9 +10,9 @@ storage_client = storage.Client()
 # Tested with Python v 3.7.2 and CPN Tools v 4.0.1
 # Server for use with processWeatherClient.cpn model example
 
-# port = 9997
-# conn = PyCPN()
-# conn.accept(port)
+port = 9997
+conn = PyCPN()
+conn.accept(port)
 
 def get_joined_labels(videoUri = "gs://vpe-video/2849def8ca874f728026669b12f35e34"):
 	client = videointelligence.VideoIntelligenceServiceClient()
@@ -36,16 +36,16 @@ def get_joined_labels(videoUri = "gs://vpe-video/2849def8ca874f728026669b12f35e3
 	
 	return ','.join(labels)
 
-# def doit():
-# 	while True:	
-# 		videoUri = stringDecode(conn.receive())
-# 		if videoUri == 'quit':
-# 			conn.disconnect()
-# 			break
-# 		else:
-# 			url = upload_text(storage_client, "vpe-video-recognition", get_joined_labels(videoUri))
-# 			conn.send(stringEncode(url))
+def doit():
+	while True:	
+		videoUri = stringDecode(conn.receive())
+		if videoUri == 'quit':
+			conn.disconnect()
+			break
+		else:
+			url = upload_text(storage_client, "vpe-video-recognition", get_joined_labels(videoUri))
+			conn.send(stringEncode(url))
 
 if __name__ == "__main__":
-	# doit()
+	doit()
 	print(get_joined_labels())
