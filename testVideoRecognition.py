@@ -48,4 +48,4 @@ def doit():
 
 if __name__ == "__main__":
 	doit()
-	print(get_joined_labels())
+	# print(get_joined_labels())

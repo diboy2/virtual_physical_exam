@@ -38,8 +38,9 @@ def get_object_entity_mentions(objectUris):
 	})
 	for uri in objectUris:
 		data = download_json(storage_client,uri)	
-		table_data["entityMentions"] += list(map(map_entity_mentions,data["entityMentions"]))
-		table_data["entities"] += list(map(map_entities, data["entities"]))
+		if data:
+			table_data["entityMentions"] += list(map(map_entity_mentions,data["entityMentions"]))
+			table_data["entities"] += list(map(map_entities, data["entities"]))
 	
 	return json2html.convert(json = table_data["entityMentions"]) + "<br/>" +  json2html.convert(json = table_data["entities"]) 
 
@@ -59,5 +60,5 @@ def doit():
 			conn.send(stringEncode(summaryUri))
 
 if __name__ == "__main__":
-	process_uri_list()
-
+	doit()
+	# process_uri_list()
