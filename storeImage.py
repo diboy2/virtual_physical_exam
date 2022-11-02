@@ -11,10 +11,6 @@ load_dotenv()
 
 storage_client = storage.Client()
 
-def download_object(file_name, uri):	
-	with open(f"resources/{file_name}", 'wb') as file_obj:
-		storage_client.download_blob_to_file(uri, file_obj)
-
 
 def upload_file(bucket_name, file_name):
 	bucket = storage_client.bucket(bucket_name)
