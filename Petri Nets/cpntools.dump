@@ -1,0 +1,386 @@
+Beta execution aborted: Illegal leave/restart.
+
+Call chain: (nti_ms)
+
+  item <onError#>LocalException# in C:/cpn2000/document/ml/private/mlcombody
+    -- *Get#withIdle#withPE# in C:/cpn2000/document/ml/private/mlcombody
+  item onError#<LocalException#> in C:/cpn2000/document/ml/mlsocket
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+  item <Error#>error#hiErrCB#integerObject#integerValue# in C:/cpn2000/document/ml/mlsocket
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+  item Error#<error#>hiErrCB#integerObject#integerValue# in ~beta/process/basicsocket
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+  item Error#error#<hiErrCB#>integerObject#integerValue# in ~beta/process/errorcallback
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item Error#error#hiErrCB#<integerObject#>integerValue# in ~beta/basiclib/betaenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item Error#error#hiErrCB#integerObject#<integerValue#> in ~beta/basiclib/betaenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item <error#>hiErrCB#integerObject#integerValue# in ~beta/process/basicsocket
+    -- *Put#withIdle#withPE# in C:/cpn2000/document/ml/private/mlcombody
+  item error#<hiErrCB#>integerObject#integerValue# in ~beta/process/errorcallback
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item error#hiErrCB#<integerObject#>integerValue# in ~beta/basiclib/betaenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item error#hiErrCB#integerObject#<integerValue#> in ~beta/basiclib/betaenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item connBrokenError#<loErrCB#>errCB#integerValue# in ~beta/process/basicsocket
+    -- *Put#withIdle#withPE# in C:/cpn2000/document/ml/private/mlcombody
+  item connBrokenError#loErrCB#<errCB#>integerValue# in ~beta/process/errorcallback
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item connBrokenError#loErrCB#errCB#<integerValue#> in ~beta/basiclib/betaenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item *<errInquiry#> in ~beta/process/private/basicsocketbody
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+  item <sendMem#> in ~beta/process/private/basicsocketbody
+    -- BASICSOCKETPRIVATE-~ in ~beta/process/private/basicsocketbody
+  item <*> in C:/cpn2000/document/ml/private/mlsocketbody
+    -- *Put#withIdle#withPE# in C:/cpn2000/document/ml/private/mlcombody
+  item *<Put#>withIdle#withPE# in C:/cpn2000/document/ml/mlsocket
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+  item *Put#<withIdle#>withPE# in ~beta/process/basicsocket
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+  item *Put#withIdle#<withPE#> in ~beta/process/basicsocket
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+  item <Execute#>Entry# in C:/cpn2000/document/ml/mlcom
+    -- ML#MLCom#Monitor# in C:/cpn2000/cpnet/cpnet
+  item Execute#<Entry#> in ~beta/basiclib/basicsystemenv
+    -- ML#MLCom#Monitor# in C:/cpn2000/cpnet/cpnet
+  item syntaxCheck#CPNMLCommand#<MLCommand#> in C:/cpn2000/document/ml/mlcom
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+  item <*>scan# in C:/cpn2000/cpnet/private/cpnetbody
+    -- * in C:/cpn2000/cpnet/private/cpnetbody
+  item *<scan#> in ~beta/containers/container
+    -- PageInstanceList#list#container# in C:/cpn2000/cpnet/cpnet
+  item <thescanner#>theScanner# in ~beta/containers/list
+    -- PageInstanceList#list#container# in C:/cpn2000/cpnet/cpnet
+  item thescanner#<theScanner#> in ~beta/containers/container
+    -- PageInstanceList#list#container# in C:/cpn2000/cpnet/cpnet
+  item *<scan#> in ~beta/containers/container
+    -- PageInstanceList#list#container# in C:/cpn2000/cpnet/cpnet
+  item <*> in C:/cpn2000/cpnet/private/cpnetbody
+    -- MLCheckerThread#System#SysHead# in C:/cpn2000/cpnet/cpnet
+  comp <MLCheckerThread#>System#SysHead# in C:/cpn2000/cpnet/cpnet
+    -- CPNet#Highlightable#ContentItem#Entity#Notifier#Element# in C:/cpn2000/cpnet/cpnet
+
+  comp MLCheckerThread#<System#>SysHead# in ~beta/basiclib/basicsystemenv
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+
+  comp MLCheckerThread#System#<SysHead#> in ~beta/basiclib/basicsystemenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  allocating comp MLCheckerThread#System#<SysHead#> in ~beta/basiclib/basicsystemenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+
+  item <UIIdle#>booleanValue# in ~beta/guienv/private/winnt/guienvntsystemenvbody
+    -- PIOPRIVATE-~ in ~beta/guienv/private/winnt/guienvntsystemenvbody
+  item UIIdle#<booleanValue#> in ~beta/basiclib/betaenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item <processOneEvent#> in ~beta/guienv/private/winnt/guienv_ntiprivate
+    -- GUIenv# in ~beta/guienv/guienv
+  item <mainLoop#> in ~beta/guienv/private/winnt/guienv_ntiprivate
+    -- GUIenv# in ~beta/guienv/guienv
+  item <GUIenv#> in ~beta/guienv/guienv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item <run#>run# in ~beta/postwimp/foundation/guisurface
+    -- GUISurface#Surface# in ~beta/postwimp/foundation/guisurface
+  item run#<run#> in ~beta/postwimp/foundation/abstractsurface
+    -- GUISurface#Surface# in ~beta/postwimp/foundation/guisurface
+  item <platformAfter#> in ~beta/postwimp/foundation/private/worldbody
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+  item <after#> in ~beta/postwimp/foundation/world
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+  comp PROGRAM-~CPNWorkSpace#Workspace#<World#>SystemEnv#SysHead# in ~beta/postwimp/foundation/world
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  comp PROGRAM-~CPNWorkSpace#Workspace#World#<SystemEnv#>SysHead# in ~beta/basiclib/basicsystemenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  comp PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#<SysHead#> in ~beta/basiclib/basicsystemenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  allocating comp PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#<SysHead#> in ~beta/basiclib/basicsystemenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+
+  item <UIIdle#>booleanValue# in ~beta/guienv/private/winnt/guienvntsystemenvbody
+    -- PIOPRIVATE-~ in ~beta/guienv/private/winnt/guienvntsystemenvbody
+  item UIIdle#<booleanValue#> in ~beta/basiclib/betaenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item <processOneEvent#> in ~beta/guienv/private/winnt/guienv_ntiprivate
+    -- GUIenv# in ~beta/guienv/guienv
+  item <mainLoop#> in ~beta/guienv/private/winnt/guienv_ntiprivate
+    -- GUIenv# in ~beta/guienv/guienv
+  item <GUIenv#> in ~beta/guienv/guienv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+  item <start#> in ~beta/guienv/private/winnt/guienvntsystemenvbody
+    -- PIOPRIVATE-~ in ~beta/guienv/private/winnt/guienvntsystemenvbody
+  comp <BASICSCHEDULER-~>SysHead# in ~beta/guienv/private/winnt/guienvntsystemenvbody
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+  comp BASICSCHEDULER-~<SysHead#> in ~beta/basiclib/basicsystemenv
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+
+  basic component in ~beta/basiclib/betaenv
+
+
+Low level information:
+
+Call chain: (nti_ms)
+
+  item <onError#>LocalException# in C:/cpn2000/document/ml/private/mlcombody
+  { PC  0x53eedeWarning! nm(DumpSectionTable): Couldn't find section number of .text
+ <+0x40eece>, object 0xa893638, proto 0x9df00e onError# [ast: 0x000b,0x004e] <+0x13f00d> }
+    -- *Get#withIdle#withPE# in C:/cpn2000/document/ml/private/mlcombody
+    { Surrounding object 0xa893620, proto 0x9def54 * [ast: 0x000b,0x003d] <+0x13ef53> }
+  item onError#<LocalException#> in C:/cpn2000/document/ml/mlsocket
+  { PC  0x5375ab <+0x40759b>, object 0xa893638, proto 0xab719e LocalException# [ast: 0x0001,0x020b] <+0x21719d> }
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+    { Surrounding object 0xfbd2f80, proto 0xab6d04 MLSocket# [ast: 0x0001,0x0133] <+0x216d03> }
+  item <Error#>error#hiErrCB#integerObject#integerValue# in C:/cpn2000/document/ml/mlsocket
+  { PC  0x5374f4 <+0x4074e4>, object 0x128d4f0, proto 0xab715a Error# [ast: 0x0001,0x0203] <+0x217159> }
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+    { Surrounding object 0xfbd2f80, proto 0xab6d04 MLSocket# [ast: 0x0001,0x0133] <+0x216d03> }
+  item Error#<error#>hiErrCB#integerObject#integerValue# in ~beta/process/basicsocket
+  { PC  0x70e2ef <`+0xbe28c>, object 0x128d4f0, proto 0xab7944 error# [ast: 0x0001,0x010f] <+0x217943> }
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+    { Surrounding object 0xfbd2f80, proto 0xab6d04 MLSocket# [ast: 0x0001,0x0133] <+0x216d03> }
+  item Error#error#<hiErrCB#>integerObject#integerValue# in ~beta/process/errorcallback
+  { PC  0x70eb84 <`+0xbeb21>, object 0x128d4f0, proto 0xab8e08 hiErrCB# [ast: 0x0001,0x0057] <+0x218e07> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item Error#error#hiErrCB#<integerObject#>integerValue# in ~beta/basiclib/betaenv
+  { PC  0x402942 <+0x2d2932>, object 0x128d4f0, proto 0x94e584 integerObject# [ast: 0x0001,0x00c9] <+0xae583> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item Error#error#hiErrCB#integerObject#<integerValue#> in ~beta/basiclib/betaenv
+  { PC  0x40294d <+0x2d293d>, object 0x128d4f0, proto 0x94e54e integerValue# [ast: 0x0001,0x00bc] <+0xae54d> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item <error#>hiErrCB#integerObject#integerValue# in ~beta/process/basicsocket
+  { PC  0x70e28a <`+0xbe227>, object 0x128d4d8, proto 0xab7ae4 error# [ast: 0x0001,0x0154] <+0x217ae3> }
+    -- *Put#withIdle#withPE# in C:/cpn2000/document/ml/private/mlcombody
+    { Surrounding object 0x102604e8, proto 0x9de990 * [ast: 0x0005,0x002d] <+0x13e98f> }
+  item error#<hiErrCB#>integerObject#integerValue# in ~beta/process/errorcallback
+  { PC  0x70eb84 <`+0xbeb21>, object 0x128d4d8, proto 0xab8e08 hiErrCB# [ast: 0x0001,0x0057] <+0x218e07> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item error#hiErrCB#<integerObject#>integerValue# in ~beta/basiclib/betaenv
+  { PC  0x402942 <+0x2d2932>, object 0x128d4d8, proto 0x94e584 integerObject# [ast: 0x0001,0x00c9] <+0xae583> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item error#hiErrCB#integerObject#<integerValue#> in ~beta/basiclib/betaenv
+  { PC  0x40294d <+0x2d293d>, object 0x128d4d8, proto 0x94e54e integerValue# [ast: 0x0001,0x00bc] <+0xae54d> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item connBrokenError#<loErrCB#>errCB#integerValue# in ~beta/process/basicsocket
+  { PC  0x70e1f9 <`+0xbe196>, object 0x128d428, proto 0xab7b24 loErrCB# [ast: 0x0001,0x016e] <+0x217b23> }
+    -- *Put#withIdle#withPE# in C:/cpn2000/document/ml/private/mlcombody
+    { Surrounding object 0x102604e8, proto 0x9de990 * [ast: 0x0005,0x002d] <+0x13e98f> }
+  item connBrokenError#loErrCB#<errCB#>integerValue# in ~beta/process/errorcallback
+  { PC  0x53c720 <+0x40c710>, object 0x128d428, proto 0xab8d08 errCB# [ast: 0x0001,0x0022] <+0x218d07> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item connBrokenError#loErrCB#errCB#<integerValue#> in ~beta/basiclib/betaenv
+  { PC  0x40294d <+0x2d293d>, object 0x128d428, proto 0x94e54e integerValue# [ast: 0x0001,0x00bc] <+0xae54d> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item *<errInquiry#> in ~beta/process/private/basicsocketbody
+  { PC  0x5377ff <+0x4077ef>, object 0x128d4b0, proto 0x9db466 errInquiry# [ast: 0x0002,0x0003] <+0x13b465> }
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+    { Surrounding object 0xfbd2f80, proto 0xab6d04 MLSocket# [ast: 0x0001,0x0133] <+0x216d03> }
+  item <sendMem#> in ~beta/process/private/basicsocketbody
+  { PC  0x537f35 <+0x407f25>, object 0xfbd4300, proto 0x9db7b6 sendMem# [ast: 0x0004,0x00d2] <+0x13b7b5> }
+    -- BASICSOCKETPRIVATE-~ in ~beta/process/private/basicsocketbody
+    { Surrounding object 0xfbd41f8, proto 0x9db55e BASICSOCKETPRIVATE-~ [ast: 0x0004,0x0001] <+0x13b55d> }
+  item <*> in C:/cpn2000/document/ml/private/mlsocketbody
+  { PC  0x537482 <+0x407472>, object 0x12888a8, proto 0x9db0fe * [ast: 0x0020,0x0003] <+0x13b0fd> }
+    -- *Put#withIdle#withPE# in C:/cpn2000/document/ml/private/mlcombody
+    { Surrounding object 0x102604e8, proto 0x9de990 * [ast: 0x0005,0x002d] <+0x13e98f> }
+  item *<Put#>withIdle#withPE# in C:/cpn2000/document/ml/mlsocket
+  { PC  0x536d47 <+0x406d37>, object 0x102604e8, proto 0xab708c Put# [ast: 0x0001,0x01e8] <+0x21708b> }
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+    { Surrounding object 0xfbd2f80, proto 0xab6d04 MLSocket# [ast: 0x0001,0x0133] <+0x216d03> }
+  item *Put#<withIdle#>withPE# in ~beta/process/basicsocket
+  { PC  0x70df76 <`+0xbdf13>, object 0x102604e8, proto 0xab7dd0 withIdle# [ast: 0x0001,0x01d6] <+0x217dcf> }
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+    { Surrounding object 0xfbd2f80, proto 0xab6d04 MLSocket# [ast: 0x0001,0x0133] <+0x216d03> }
+  item *Put#withIdle#<withPE#> in ~beta/process/basicsocket
+  { PC  0x70e00f <`+0xbdfac>, object 0x102604e8, proto 0xab7a90 withPE# [ast: 0x0001,0x0150] <+0x217a8f> }
+    -- MLSocket#BasicSocket# in C:/cpn2000/document/ml/mlsocket
+    { Surrounding object 0xfbd2f80, proto 0xab6d04 MLSocket# [ast: 0x0001,0x0133] <+0x216d03> }
+  item <Execute#>Entry# in C:/cpn2000/document/ml/mlcom
+  { PC  0x53dc32 <+0x40dc22>, object 0x1025ff88, proto 0xab24dc Execute# [ast: 0x0001,0x0085] <+0x2124db> }
+    -- ML#MLCom#Monitor# in C:/cpn2000/cpnet/cpnet
+    { Surrounding object 0xfbd25a8, proto 0xa89c00 ML# [ast: 0x0002,0x0e20] <+0x1e9bff> }
+  item Execute#<Entry#> in ~beta/basiclib/basicsystemenv
+  { PC  0x741116 <`+0xf10b3>, object 0x1025ff88, proto 0xadab6e Entry# [ast: 0x0001,0x00d6] <+0x23ab6d> }
+    -- ML#MLCom#Monitor# in C:/cpn2000/cpnet/cpnet
+    { Surrounding object 0xfbd25a8, proto 0xa89c00 ML# [ast: 0x0002,0x0e20] <+0x1e9bff> }
+  item syntaxCheck#CPNMLCommand#<MLCommand#> in C:/cpn2000/document/ml/mlcom
+  { PC  0x70b701 <`+0xbb69e>, object 0x10260438, proto 0xab26e8 MLCommand# [ast: 0x0001,0x010d] <+0x2126e7> }
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+    { Surrounding object 0x304f610, proto 0xa0e0a0 PROGRAM-~ [ast: 0x0001,0x0001] <+0x16e09f> }
+  item <*>scan# in C:/cpn2000/cpnet/private/cpnetbody
+  { PC  0x59e679 <+0x46e669>, object 0x1027c4b8, proto 0x9f05da * [ast: 0x002d,0x03d5] <+0x1505d9> }
+    -- * in C:/cpn2000/cpnet/private/cpnetbody
+    { Surrounding object 0xa893c58, proto 0x9f000c * [ast: 0x002d,0x0007] <+0x15000b> }
+  item *<scan#> in ~beta/containers/container
+  { PC  0x60e6ed <+0x4de6dd>, object 0x1027c4b8, proto 0xada38a scan# [ast: 0x0001,0x0073] <+0x23a389> }
+    -- PageInstanceList#list#container# in C:/cpn2000/cpnet/cpnet
+    { Surrounding object 0x1028c8a0, proto 0xa86a10 PageInstanceList# [ast: 0x0002,0x01a3] <+0x1e6a0f> }
+  item <thescanner#>theScanner# in ~beta/containers/list
+  { PC  0x60d80c <+0x4dd7fc>, object 0x1027c680, proto 0xad9ba0 thescanner# [ast: 0x0001,0x0179] <+0x239b9f> }
+    -- PageInstanceList#list#container# in C:/cpn2000/cpnet/cpnet
+    { Surrounding object 0x1028c8a0, proto 0xa86a10 PageInstanceList# [ast: 0x0002,0x01a3] <+0x1e6a0f> }
+  item thescanner#<theScanner#> in ~beta/containers/container
+  { PC  0x60e625 <+0x4de615>, object 0x1027c680, proto 0xada350 theScanner# [ast: 0x0001,0x005b] <+0x23a34f> }
+    -- PageInstanceList#list#container# in C:/cpn2000/cpnet/cpnet
+    { Surrounding object 0x1028c8a0, proto 0xa86a10 PageInstanceList# [ast: 0x0002,0x01a3] <+0x1e6a0f> }
+  item *<scan#> in ~beta/containers/container
+  { PC  0x60e6e1 <+0x4de6d1>, object 0x1027c4b8, proto 0xada38a scan# [ast: 0x0001,0x0073] <+0x23a389> }
+    -- PageInstanceList#list#container# in C:/cpn2000/cpnet/cpnet
+    { Surrounding object 0x1028c8a0, proto 0xa86a10 PageInstanceList# [ast: 0x0002,0x01a3] <+0x1e6a0f> }
+  item <*> in C:/cpn2000/cpnet/private/cpnetbody
+  { PC  0x59c7e5 <+0x46c7d5>, object 0xa893c58, proto 0x9f000c * [ast: 0x002d,0x0007] <+0x15000b> }
+    -- MLCheckerThread#System#SysHead# in C:/cpn2000/cpnet/cpnet
+    { Surrounding object 0xfbd26d0, proto 0xa89ef2 MLCheckerThread# [ast: 0x0002,0x0ee7] <+0x1e9ef1> }
+  comp <MLCheckerThread#>System#SysHead# in C:/cpn2000/cpnet/cpnet
+  { PC  0x59c541 <+0x46c531>, object 0xfbd26d0, proto 0xa89ef2 MLCheckerThread# [ast: 0x0002,0x0ee7] <+0x1e9ef1> }
+    -- CPNet#Highlightable#ContentItem#Entity#Notifier#Element# in C:/cpn2000/cpnet/cpnet
+    { Surrounding object 0xfbd21f8, proto 0xa883cc CPNet# [ast: 0x0002,0x0558] <+0x1e83cb> }
+
+  comp MLCheckerThread#<System#>SysHead# in ~beta/basiclib/basicsystemenv
+  { PC  0x740e93 <`+0xf0e30>, object 0xfbd26d0, proto 0xadabcc System# [ast: 0x0001,0x00fb] <+0x23abcb> }
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+    { Surrounding object 0x304f610, proto 0xa0e0a0 PROGRAM-~ [ast: 0x0001,0x0001] <+0x16e09f> }
+
+  comp MLCheckerThread#System#<SysHead#> in ~beta/basiclib/basicsystemenv
+  { PC  0x740b57 <`+0xf0af4>, object 0xfbd26d0, proto 0xadb516 SysHead# [ast: 0x0001,0x0310] <+0x23b515> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  allocating comp MLCheckerThread#System#<SysHead#> in ~beta/basiclib/basicsystemenv
+  { PC  0x4028c5 <+0x2d28b5>, object 0xfbd26d0, proto 0xadb516 SysHead# [ast: 0x0001,0x0310] <+0x23b515> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+
+  item <UIIdle#>booleanValue# in ~beta/guienv/private/winnt/guienvntsystemenvbody
+  { PC  0x44cfa8 <+0x31cf98>, object 0x30535f0, proto 0x96dc06 UIIdle# [ast: 0x0005,0x0028] <+0xcdc05> }
+    -- PIOPRIVATE-~ in ~beta/guienv/private/winnt/guienvntsystemenvbody
+    { Surrounding object 0x3050a70, proto 0x96db8e PIOPRIVATE-~ [ast: 0x0005,0x0001] <+0xcdb8d> }
+  item UIIdle#<booleanValue#> in ~beta/basiclib/betaenv
+  { PC  0x40290b <+0x2d28fb>, object 0x30535f0, proto 0x94e6a2 booleanValue# [ast: 0x0001,0x0104] <+0xae6a1> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item <processOneEvent#> in ~beta/guienv/private/winnt/guienv_ntiprivate
+  { PC  0x4ab280 <+0x37b270>, object 0x31bd278, proto 0x9acb68 processOneEvent# [ast: 0x0001,0x0018] <+0x10cb67> }
+    -- GUIenv# in ~beta/guienv/guienv
+    { Surrounding object 0x3050710, proto 0x9b85fc GUIenv# [ast: 0x0001,0x0003] <+0x1185fb> }
+  item <mainLoop#> in ~beta/guienv/private/winnt/guienv_ntiprivate
+  { PC  0x4ab7b3 <+0x37b7a3>, object 0x31bd268, proto 0x9acb24 mainLoop# [ast: 0x0001,0x0003] <+0x10cb23> }
+    -- GUIenv# in ~beta/guienv/guienv
+    { Surrounding object 0x3050710, proto 0x9b85fc GUIenv# [ast: 0x0001,0x0003] <+0x1185fb> }
+  item <GUIenv#> in ~beta/guienv/guienv
+  { PC  0x4a8be7 <+0x378bd7>, object 0x3050710, proto 0x9b85fc GUIenv# [ast: 0x0001,0x0003] <+0x1185fb> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item <run#>run# in ~beta/postwimp/foundation/guisurface
+  { PC  0x48f188 <+0x35f178>, object 0x31bd2b8, proto 0x9a4676 run# [ast: 0x0001,0x0b43] <+0x104675> }
+    -- GUISurface#Surface# in ~beta/postwimp/foundation/guisurface
+    { Surrounding object 0x30505f8, proto 0x9a3236 GUISurface# [ast: 0x0001,0x0048] <+0x103235> }
+  item run#<run#> in ~beta/postwimp/foundation/abstractsurface
+  { PC  0x739497 <`+0xe9434>, object 0x31bd2b8, proto 0xad3ec0 run# [ast: 0x0001,0x081f] <+0x233ebf> }
+    -- GUISurface#Surface# in ~beta/postwimp/foundation/guisurface
+    { Surrounding object 0x30505f8, proto 0x9a3236 GUISurface# [ast: 0x0001,0x0048] <+0x103235> }
+  item <platformAfter#> in ~beta/postwimp/foundation/private/worldbody
+  { PC  0x48d8de <+0x35d8ce>, object 0x31bd6b8, proto 0xa11ae8 platformAfter# [ast: 0x0003,0x000a] <+0x171ae7> }
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+    { Surrounding object 0x304f610, proto 0xa0e0a0 PROGRAM-~ [ast: 0x0001,0x0001] <+0x16e09f> }
+  item <after#> in ~beta/postwimp/foundation/world
+  { PC  0x631d4f <+0x501d3f>, object 0x31bd2e8, proto 0xacf37c after# [ast: 0x0001,0x1d9c] <+0x22f37b> }
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+    { Surrounding object 0x304f610, proto 0xa0e0a0 PROGRAM-~ [ast: 0x0001,0x0001] <+0x16e09f> }
+  comp PROGRAM-~CPNWorkSpace#Workspace#<World#>SystemEnv#SysHead# in ~beta/postwimp/foundation/world
+  { PC  0x72ebfb <`+0xdeb98>, object 0x304f610, proto 0xac97b4 World# [ast: 0x0001,0x00c6] <+0x2297b3> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  comp PROGRAM-~CPNWorkSpace#Workspace#World#<SystemEnv#>SysHead# in ~beta/basiclib/basicsystemenv
+  { PC  0x740cac <`+0xf0c49>, object 0x304f610, proto 0xada85c SystemEnv# [ast: 0x0001,0x002e] <+0x23a85b> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  comp PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#<SysHead#> in ~beta/basiclib/basicsystemenv
+  { PC  0x740b57 <`+0xf0af4>, object 0x304f610, proto 0xadb516 SysHead# [ast: 0x0001,0x0310] <+0x23b515> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  allocating comp PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#<SysHead#> in ~beta/basiclib/basicsystemenv
+  { PC  0x4028c5 <+0x2d28b5>, object 0x304f610, proto 0xadb516 SysHead# [ast: 0x0001,0x0310] <+0x23b515> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+
+  item <UIIdle#>booleanValue# in ~beta/guienv/private/winnt/guienvntsystemenvbody
+  { PC  0x44cfa8 <+0x31cf98>, object 0x30535f0, proto 0x96dc06 UIIdle# [ast: 0x0005,0x0028] <+0xcdc05> }
+    -- PIOPRIVATE-~ in ~beta/guienv/private/winnt/guienvntsystemenvbody
+    { Surrounding object 0x3050a70, proto 0x96db8e PIOPRIVATE-~ [ast: 0x0005,0x0001] <+0xcdb8d> }
+  item UIIdle#<booleanValue#> in ~beta/basiclib/betaenv
+  { PC  0x40290b <+0x2d28fb>, object 0x30535f0, proto 0x94e6a2 booleanValue# [ast: 0x0001,0x0104] <+0xae6a1> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item <processOneEvent#> in ~beta/guienv/private/winnt/guienv_ntiprivate
+  { PC  0x4ab280 <+0x37b270>, object 0x3053af0, proto 0x9acb68 processOneEvent# [ast: 0x0001,0x0018] <+0x10cb67> }
+    -- GUIenv# in ~beta/guienv/guienv
+    { Surrounding object 0x3050710, proto 0x9b85fc GUIenv# [ast: 0x0001,0x0003] <+0x1185fb> }
+  item <mainLoop#> in ~beta/guienv/private/winnt/guienv_ntiprivate
+  { PC  0x4ab7b3 <+0x37b7a3>, object 0x3053ae0, proto 0x9acb24 mainLoop# [ast: 0x0001,0x0003] <+0x10cb23> }
+    -- GUIenv# in ~beta/guienv/guienv
+    { Surrounding object 0x3050710, proto 0x9b85fc GUIenv# [ast: 0x0001,0x0003] <+0x1185fb> }
+  item <GUIenv#> in ~beta/guienv/guienv
+  { PC  0x4a8be7 <+0x378bd7>, object 0x3050710, proto 0x9b85fc GUIenv# [ast: 0x0001,0x0003] <+0x1185fb> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+  item <start#> in ~beta/guienv/private/winnt/guienvntsystemenvbody
+  { PC  0x44c912 <+0x31c902>, object 0x3050b60, proto 0x96ddc4 start# [ast: 0x0005,0x01aa] <+0xcddc3> }
+    -- PIOPRIVATE-~ in ~beta/guienv/private/winnt/guienvntsystemenvbody
+    { Surrounding object 0x3050a70, proto 0x96db8e PIOPRIVATE-~ [ast: 0x0005,0x0001] <+0xcdb8d> }
+  comp <BASICSCHEDULER-~>SysHead# in ~beta/guienv/private/winnt/guienvntsystemenvbody
+  { PC  0x44ba90 <+0x31ba80>, object 0x3050b88, proto 0x96dade BASICSCHEDULER-~ [ast: 0x0002,0x0001] <+0xcdadd> }
+    -- PROGRAM-~CPNWorkSpace#Workspace#World#SystemEnv#SysHead# in C:/cpn2000/cpntools/cpntools
+    { Surrounding object 0x304f610, proto 0xa0e0a0 PROGRAM-~ [ast: 0x0001,0x0001] <+0x16e09f> }
+  comp BASICSCHEDULER-~<SysHead#> in ~beta/basiclib/basicsystemenv
+  { PC  0x740b57 <`+0xf0af4>, object 0x3050b88, proto 0xadb516 SysHead# [ast: 0x0001,0x0310] <+0x23b515> }
+    -- BETAENV-~ in ~beta/basiclib/betaenv
+    { Surrounding object 0x304f400, proto 0x94e3a0 BETAENV-~ [ast: 0x0001,0x0001] <+0xae39f> }
+
+  basic component in ~beta/basiclib/betaenv
+
+Legend:
+
+The above dumps show the dynamic call stack of invoked objects.
+Each dump starts at the object that was the current object when
+the error occurred and continues down towards the basic component.
+The descriptions have the following meaning:
+1. Items are shown in two lines, like this:
+      item <name#>pname1#pname2#pname3 in ifile
+        -- sname#spname1#spname2 in sfile
+   meaning that the item is an instance of the pattern "name" which
+   has prefix "pname1" which has prefix "pname2", etc. 
+   This item is defined in the file "ifile". 
+   The part of the prefix chain enclosed in "<" and ">" indicates
+   where in the action sequence the error occurred.
+   The line beginning with "--" shows the textually surrounding
+   pattern using the same notation.
+2. The descriptor names used in the above description will normally
+   have one or more "meta characters" appended. These mean:
+      #  The descriptor belongs to a pattern, e.g. P: (# ... #)
+      ~  Singular named descriptor, e.g. X: @(# ... #)
+      *  Singular unnamed descriptor, e.g. ... ; (# ... #) ; ...
+      -  Descriptor SLOT.
+3. Components are shown using a notation similar to that of items:
+      comp <name#>pname1#pname2#pname3 in cfile
+4. The bottommost component corresponding to the basic environment is
+   shown like an ordinary component, but indicated with
+      basic component <name#>pname1#pname2#pname3 in cfile
+5. In case the error occurred in some external code called from BETA,
+   the top of the call stack is shown as
+      [ EXTERNAL ACTIVATION PART ]
+6. In case the BETA code has called some external code which has in
+   turn called back into the BETA code, and the callback is still
+   active at the point of the error, the intermediate call stack part
+   is shown as
+      [ EXTERNAL ACTIVATION PART ]
+7. The section labeled "Low level information" can be avoided by
+      set BETART=SimpleDump
+   before subsequent executions of the program.

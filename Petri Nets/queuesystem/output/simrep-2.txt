@@ -1,0 +1,17 @@
+CPN Tools simulation report for:
+/cygdrive/C/Users/acagaana/Documents/Petri Nets/queuesystem/QueueSystem.cpn
+Report generated: Mon Oct 17 09:21:04 2022
+
+1	0	Init @ (1:Arrivals)
+2	210	Arrive @ (1:Arrivals)
+ - jobs = []
+ - job = {jobType=A,AT=210}
+3	210	Start @ (1:Server)
+ - jobs = []
+ - job = {jobType=A,AT=210}
+ - proctime = 28
+4	238	Stop @ (1:Server)
+ - job = {jobType=A,AT=210}
+5	348	Arrive @ (1:Arrivals)
+ - jobs = []
+ - job = {jobType=A,AT=348}

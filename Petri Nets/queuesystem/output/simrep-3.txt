@@ -1,0 +1,5 @@
+CPN Tools simulation report for:
+/cygdrive/C/Users/acagaana/Documents/Petri Nets/queuesystem/QueueSystem.cpn
+Report generated: Mon Oct 17 09:21:25 2022
+
+1	0.0	Init @ (1:Arrivals)
