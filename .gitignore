@@ -1,2 +1,3 @@
-./__pycache__
+__pycache__
+./util/__pycache__
 virtual-physical-examination-service-account-key.json

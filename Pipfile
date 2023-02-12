@@ -9,6 +9,8 @@ requests = "*"
 setuptools = "*"
 python-dotenv = "*"
 json2html = "*"
+numpy = "*"
+matplotlib = "*"
 
 [dev-packages]
 
