@@ -11,6 +11,7 @@ python-dotenv = "*"
 json2html = "*"
 numpy = "*"
 matplotlib = "*"
+yt-dlp = "*"
 
 [dev-packages]
 

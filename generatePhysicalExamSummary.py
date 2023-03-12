@@ -31,18 +31,18 @@ def get_object_entity_mentions(objectUris):
 			"preferredTerm": entity["preferredTerm"],
 			"vocabularyCodes": entity["vocabularyCodes"][0]
 		})
-	
+
 	table_data = table_data = dict({
 		"entityMentions": [],
 		"entities": []
 	})
 	for uri in objectUris:
-		data = download_json(storage_client,uri)	
+		data = download_json(storage_client,uri)
 		if data:
 			table_data["entityMentions"] += list(map(map_entity_mentions,data["entityMentions"]))
 			table_data["entities"] += list(map(map_entities, data["entities"]))
-	
-	return json2html.convert(json = table_data["entityMentions"]) + "<br/>" +  json2html.convert(json = table_data["entities"]) 
+
+	return json2html.convert(json = table_data["entityMentions"]) + "<br/>" +  json2html.convert(json = table_data["entities"])
 
 def process_uri_list(uriList = "gs://vpe-text-recognition/fd65ff44541c44d6ae8afbcec8af313f.json,gs://vpe-text-recognition/c985aac5da024959888c56fa7c8e969d.json"):
 	print(uriList)
@@ -61,4 +61,3 @@ def doit():
 
 if __name__ == "__main__":
 	doit()
-	# process_uri_list()

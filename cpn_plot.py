@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 x = []
 y = []
-file_path = "Text_Recognition_Utilization.log"
+file_path = "./simulation_report/logfiles/Text_Recognition_Utilization.log"
 with open(file_path, 'r') as f:
     next(f)
     for line in f:

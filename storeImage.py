@@ -21,7 +21,7 @@ def upload_file(bucket_name, file_name):
 	print(f"{object_name} with file name {file_name} uploaded to {bucket_name}.")
 	return f"gs://{bucket_name}/{object_name}"
 
-def doit():
+def integrate_with_simulation():
 	while True:
 		file = stringDecode(conn.receive())
 		if file == 'quit':
@@ -31,6 +31,6 @@ def doit():
 			url = upload_file("vpe-images", f"resources/{file}.jpg")
 			conn.send(stringEncode(url))
 			break
-
+# 
 if __name__ == "__main__":
-	doit()
+	integrate_with_simulation()

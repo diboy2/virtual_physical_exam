@@ -17,7 +17,7 @@ python3 -m storeMedicalHistory &
 python3 -m storePatientConcerns &
 python3 -m storePhysicianNotes &
 python3 -m generatePhysicalExamSummary &
-python3 -m testVideoRecognition &
-python3 -m testImageRecognition &
-python3 -m testTextRecognition &
+python3 -m videoRecognition &
+python3 -m imageRecognition &
+python3 -m textRecognition &
 wait
