@@ -38,17 +38,26 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 ### Built With
 
 * Python
 * React
 * Google Cloud
+
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+![Virtual Physical Exam Model](https://github.com/diboy2/virtual_physical_exam/assets/1735785/f5cfa66a-c462-4822-add0-1b12a1f0baa3)
+![Pre-Physical Examination](https://github.com/diboy2/virtual_physical_exam/assets/1735785/c4243e32-5b98-4093-9fd1-a3a4230707c6)
+![PhysicalExaminationWithLogs](https://github.com/diboy2/virtual_physical_exam/assets/1735785/e88ae162-49aa-45f6-b1d8-b7b4fba162da)
+![Post-Physical Examination Model](https://github.com/diboy2/virtual_physical_exam/assets/1735785/a4ca6892-c722-4044-9878-4c1d34883af6)
+
+![Static Diagram](https://github.com/diboy2/virtual_physical_exam/assets/1735785/2d625991-346b-47f7-a3b1-b7fd2bc16ad4)
+![Virtual Physical Exam Model](https://github.com/diboy2/virtual_physical_exam/assets/1735785/ab8507ff-e2f0-42f7-9f92-db5480663b50)
+
+![Models UI Mapping](https://github.com/diboy2/virtual_physical_exam/assets/1735785/cc979324-942c-4e89-aeb2-48b6a6db1537)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
