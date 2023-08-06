@@ -21,17 +21,17 @@
 
 
 <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-  </ol>
-</details>
+
+## Table of Contents
+<ul>
+  <li><a href="#about-the-project">About The Project</a></li>
+  <li><a href="#built-with">Built With</a></li>
+  <li><a href="#colored-petri-nets-models">Colored Petri Nets Models</a></li>
+  <li><a href="#system-designs">System Designs</a></li>
+  <li><a href="#graphical-user-interface-deployed-on-google-cloud"> Graphical User Interface Deployed On Google Cloud</a></li>
+</ul>
+
+
 
 
 
