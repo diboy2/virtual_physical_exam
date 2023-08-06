@@ -16,7 +16,7 @@
 
 <h3 align="center">MODEL-DRIVEN DEVELOPMENT FOR A CLOUD-BASED HEALTHCARE APPLICATION</h3>
 
-The 21st century has brought forth widespread adoption of the cloud computing paradigm when constructing large-scale software systems. While the approach has enabled systems to exhibit software quality attributes such as high agility and scalability, it has also magnified long-standing issues related to maintaining both software development standards and their accompanying software implementations. The research aims to improve or maintain the quality of consumer-driven software as cloud computing adoption becomes more prevalent.  Our model-driven approach intends to offer solutions to fix the typical disconnect between design and implementation. The project designs cloud-based healthcare application using a modeling language called Colored Petri Nets. It utilizes the Google Cloud ecosystem to build the project.
+ &ensp; &ensp; &ensp;The project designs cloud-based healthcare application using a modeling language called Colored Petri Nets. It utilizes the Google Cloud ecosystem to build the project.
 
 
 
